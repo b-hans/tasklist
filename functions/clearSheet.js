@@ -5,15 +5,19 @@ function clearSheet () {
     try {
 
         FORMSHEET.getRange(1, 1, FORMSHEET.getMaxRows(), FORMSHEET.getMaxColumns())
-            .clear();
+            .clear()
+            .setFontSize(10)
+            .setFontFamily('Arial')
+            .setHorizontalAlignment('left')
+            .setVerticalAlignment('top');
 
-        FORMSHEET.getRange("A1:H31").clearDataValidations();
+        FORMSHEET.getRange(FORM_BACK_RANGE).clearDataValidations();
 
         FORMSHEET.setRowHeights(1, FORMSHEET.getMaxRows(), 21);
         FORMSHEET.setColumnWidths(1, FORMSHEET.getMaxColumns(), 100);
 
 
-        if (!setCache({display: display, data: {}})) {
+        if (!setCache({display: display, data: {status: 'clear'}})) {
             return false;
         }
 
