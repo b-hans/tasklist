@@ -35,3 +35,31 @@ const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
     .setAllowInvalid(true)
     .build();
 
+const FORM_CREATE_ACTIONS_LIST = [
+    'Actions',
+    'Enter',
+    'Cancel'
+];
+
+const FORM_CREATE_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(FORM_CREATE_ACTIONS_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
+
+// create form
+const CREATE_TASK_NAME = "C10";
+const CREATE_DUE_DATE = "C11";
+const CREATE_REPEAT = "C12";
+const CREATE_ASSIGNEE = "C13";
+
+const CTN_INPUT = "D10:E10";
+const CDD_INPUT = "D11:E11";
+const CRP_INPUT = "D12:E12";
+const CAS_INPUT = "D13:E13";
+
+const CREATE_INPUT_RANGE = "C10:E13";
+
+const LIGHT_GRAY = '#f3f3f3';
+
+
