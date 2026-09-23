@@ -1,6 +1,8 @@
 const FORMSHEET = SpreadsheetApp.getActiveSpreadsheet()
     .getSheetByName('Forms');
 
+const DATASHEET_ID = '1Is8Z2CBuAJ5oxIQztNq6rDFj65J_jtGORgsRe0k9iXI';
+
 // Call our working cache as TASK_CACHE
 const CACHE = CacheService.getScriptCache();
 
@@ -61,5 +63,12 @@ const CAS_INPUT = "D13:E13";
 const CREATE_INPUT_RANGE = "C10:E13";
 
 const LIGHT_GRAY = '#f3f3f3';
+
+const DATE_PICKER_RULE = SpreadsheetApp.newDataValidation()
+    .requireDate()
+    .setAllowInvalid(false) // Blocks invalid text entry
+    .setHelpText("Please enter a valid date using the calendar picker.")
+    .build();
+    
 
 

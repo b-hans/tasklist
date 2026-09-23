@@ -20,6 +20,10 @@ function mainTrigger (e) {
 
         display.setFontColor('black').setValue ("Working....");
 
+        if (TASK_DATA.status == "create_task") {
+            return createTaskTrigger(e);
+        }
+
         switch (A1) {
 
             case "A1":

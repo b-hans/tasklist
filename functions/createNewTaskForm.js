@@ -11,11 +11,10 @@ function createNewTaskForm () {
 
         TASK_DATA.status = "create_task";
 
-        setCache({display: display, data: TASK_DATA});
 
         FORMSHEET.getRange(CLEAR_RANGE)
             .clear()
-            .setBackground("#e3eaf5");
+            .setBackground(FORM_BACKGROUND);
 
         // Task name
 
@@ -42,10 +41,6 @@ function createNewTaskForm () {
             return false;
         }
 
-        FORMSHEET.getRange(CTN_INPUT).merge().setBackground('white');
-        FORMSHEET.getRange(CDD_INPUT).merge().setBackground(LIGHT_GRAY);
-        FORMSHEET.getRange(CRP_INPUT).merge().setBackground('white');
-        FORMSHEET.getRange(CAS_INPUT).merge().setBackground(LIGHT_GRAY);
 
         let inRange = FORMSHEET.getRange(CREATE_INPUT_RANGE)
             .setBorder(
@@ -59,8 +54,49 @@ function createNewTaskForm () {
         FORMSHEET.getRange(FORM_ACTIONS_DD)
             .setDataValidation(FORM_CREATE_ACTIONS_RULE);
 
-        display.setValue ("Get new form data");
+        let taskData = getTaskData({display: display});
 
+        if (!taskData) {
+            return false;
+        }
+
+        FORMSHEET.getRange(CTN_INPUT).merge().setBackground('white');
+
+        // data picker
+        let dateField = FORMSHEET.getRange(CDD_INPUT)
+            .merge().setBackground(LIGHT_GRAY)
+            .setDataValidation(DATE_PICKER_RULE);
+
+        // Repeat options
+        let repeatOptionDD = FORMSHEET.getRange(CRP_INPUT).merge().setBackground('white');
+        let rodd_list = taskData.repeatTypes.map(type => type.type);
+        rodd_list.unshift("Select one");
+        let rodd_rule = SpreadsheetApp.newDataValidation()
+            .requireValueInList(rodd_list, true)
+            .setAllowInvalid(true)
+            .build();
+
+        repeatOptionDD.setDataValidation(rodd_rule)
+            .setValue("Select one");
+
+        // Assignees
+        let assigneeOptionDD = FORMSHEET.getRange(CAS_INPUT)
+            .merge().setBackground(LIGHT_GRAY);
+
+        let aodd_list = taskData.assignees.map (assi => assi.name);
+        aodd_list.unshift("Select one");
+        let aodd_rule = SpreadsheetApp.newDataValidation()
+            .requireValueInList(aodd_list, true)
+            .setAllowInvalid(true)
+            .build();
+
+        assigneeOptionDD.setDataValidation(aodd_rule)
+            .setValue("Select one");
+
+        TASK_DATA.sheetData = taskData;
+        setCache({display: display, data: TASK_DATA});
+
+        display.setValue ("Ready!");
         return true;
     }
     catch (error) {
