@@ -10,6 +10,8 @@ const FORM_BACKGROUND = '#e3eaf5';
 const TITLE_BORDER_COLOR = '#688cc3';
 const HEADER_BORDER_COLOR = '#617788';
 
+const CLEAR_RANGE = "A10:H28";
+
 const FORM_TITLE_RANGE = "B2:G3";
 const FORM_DISPLAY_RANGE = "B5:G6";
 

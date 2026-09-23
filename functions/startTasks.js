@@ -79,7 +79,16 @@ function startTasks () {
         }
 
         display.setValue("Ready!");
-        setCache({display: display, data: {status: "main_menu"}});
+        setCache({
+            display:    display, 
+            data:       {
+                            status:     "main_menu",
+                            display:    display.getA1Notation()
+                        }
+        });
+
+        let TASK_CACHE = getCache();
+
         return true;
 
     }
