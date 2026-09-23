@@ -1,6 +1,6 @@
 function clearSheet () {
     
-    const display = FORMSHEET.getRange("A1");
+    const display = FORMSHEET.getRange("A1").activate();
 
     try {
 
