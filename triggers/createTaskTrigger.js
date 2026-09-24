@@ -39,7 +39,11 @@ function createTaskTrigger (e) {
                 }
 
                 if (eValue == "Cancel") {
-                    return requestResponse({display: display, eValue});
+                    return requestResponse({display: display, eValue: eValue});
+                }
+
+                if (eValue == "Enter") {
+                    return requestResponse({display: display, eValue: eValue});
                 }
 
                 FORMSHEET.getRange(FORM_ACTIONS_DD).setValue("Actions");

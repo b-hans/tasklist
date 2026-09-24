@@ -10,30 +10,60 @@ function requestResponse (params) {
 
         if (TASK_DATA.status == "create_task") {
 
-            TASK_DATA.response_message = "You are about to Cancel\n" +
-                "Do you wish to proceed?";
+            let response_message;
+            let reList;
+            let reRule;
+            let resRange = FORMSHEET.getRange(RESPONSE_DD);
 
-            setCache({display: display, data: TASK_DATA});
+            switch (eValue) {
+                case "Cancel":
 
-            display.setHorizontalAlignment('right').setFontColor('red')
-                .setValue(TASK_DATA.response_message);
+                    response_message = "You are about to Cancel\n" +
+                        "Do you wish to proceed?";
 
-            let reList = [
-                'Select one',
-                'Yes, cancel',
-                'No, return'
-            ];
+                    reList = [
+                        'Select one',
+                        'Yes, cancel',
+                        'No, return'
+                    ];
 
-            let reRule = SpreadsheetApp.newDataValidation()
+                    break;
+
+                case "Enter":
+                    response_message = "You are about to enter this task\n" +
+                        "Do you wish to proceed?";
+
+                    reList = [
+                        'Select one',
+                        'Yes, enter',
+                        'No, return'
+                    ];
+
+                    break;
+
+                default:
+                    return true;
+
+            }
+
+            reRule = SpreadsheetApp.newDataValidation()
                 .requireValueInList(reList, true)
                 .setAllowInvalid(true)
                 .build();
 
-            let resRange = FORMSHEET.getRange(RESPONSE_DD)
-                .setBackground('#eeb7be')
+            resRange.setBackground('#eeb7be')
                 .setDataValidation(reRule)
                 .setValue("Select one")
                 .activate();
+
+            display.setHorizontalAlignment('right').setFontColor('red')
+                .setValue(response_message);
+
+            TASK_DATA.response_message = response_message;
+
+            setCache({display: display, data: TASK_DATA});
+
+            return true;
 
         }
         else {
