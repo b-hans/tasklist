@@ -7,16 +7,20 @@ function verifyTask (params) {
         let myData = assignTask(params);
         let sheetData = getTaskData();
 
-        console.log (myData);
-        console.log (sheetData);
-
         let messages = [];
 
         // check for task exists
         if (sheetData.tasks.some(task => {
-            task.task_name == myData.name &&
-            task.assignee == myData.assignee &&
-            (!task.completed || task.completed == false)
+            const strValue = String(task.completed).trim().toLowerCase();
+
+            if (task.task_name.toLowerCase().trim() == myData.name.toLowerCase().trim() &&
+                task.assignee == myData.assignee &&
+                (!task.completed || strValue === "false" || strValue === "")) {
+                    return true;
+                }
+            else {
+                return false;
+            }
 
         })) {
             messages.push ("Task exists");

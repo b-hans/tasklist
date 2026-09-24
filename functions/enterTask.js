@@ -21,8 +21,11 @@ function enterTask (params) {
 
         sheet.appendRow(row);
 
+        if (!startTasks()) {
+            return false;
+        }
 
-        display.setValue ("Entering....");
+        display.setValue ("Task entered");
         return true;
     }
     catch (error) {

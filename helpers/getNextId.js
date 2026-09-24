@@ -3,7 +3,7 @@ function getNextId (params) {
     const display = params.display;
     const type = params.type;
 
-    const idCol = 0;
+    const idCol = 1;
     const data_sheet = SpreadsheetApp.openById(DATASHEET_ID);
     let sheet;
 

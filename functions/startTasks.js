@@ -88,6 +88,10 @@ function startTasks () {
                         }
         });
 
+        if (!populateTasks({display: display})) {
+            return false;
+        }
+
         return true;
 
     }
