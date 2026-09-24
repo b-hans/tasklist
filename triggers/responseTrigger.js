@@ -28,7 +28,6 @@ function responseTrigger (e) {
             switch (eValue) {
 
                 case "Yes, cancel":
-                    FORMSHEET.getRange(CDD_IN).disabled = false;
                     if (!startTasks()) {
                         return false;
                     }
@@ -39,7 +38,6 @@ function responseTrigger (e) {
                     return true;
 
                 case "No, return":
-                    FORMSHEET.getRange(CDD_IN).disabled = false;
                     return clearResponse();
 
                 default:
