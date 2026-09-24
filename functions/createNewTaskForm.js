@@ -10,6 +10,7 @@ function createNewTaskForm () {
 
         FORMSHEET.getRange(CLEAR_RANGE)
             .clear()
+            .removeCheckboxes()
             .setBackground(FORM_BACKGROUND);
 
         // Task name
