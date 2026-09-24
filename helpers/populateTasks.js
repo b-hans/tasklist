@@ -7,7 +7,7 @@ function populateTasks (params) {
         let myData = getTaskData();
         let tasks = myData.tasks;
 
-        let startRow = 11;
+        let startRow = TASK_START_ROW;
 
         let mappedArray = tasks
             .filter (

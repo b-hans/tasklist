@@ -75,6 +75,8 @@ const DATE_PICKER_RULE = SpreadsheetApp.newDataValidation()
     .build();
 
 const RESPONSE_DD = "G8";
+const TASK_START_ROW = 11;
+const TASK_CHECK_COLUMN = 7;
     
 
 
