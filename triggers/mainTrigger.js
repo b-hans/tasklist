@@ -6,17 +6,13 @@ function mainTrigger (e) {
 
     const A1 = eRange.getA1Notation();
 
+    let display = getDisplay();
+
     try {
 
         if (e.range.getSheet().getName() != "Forms") {
             return true;
         }
-
-        let display = FORMSHEET.getRange("A1");
-
-        if (TASK_DATA.display) {
-            display = FORMSHEET.getRange(TASK_DATA.display);
-        } 
 
         display.setFontColor('black').setValue ("Working....");
 

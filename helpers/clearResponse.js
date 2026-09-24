@@ -5,7 +5,7 @@ function clearResponse () {
     try {
 
         let display = FORMSHEET.getRange("A1");
-        if (TASK_DATA.display) {
+        if (TASK_DATA && TASK_DATA.display) {
             display = FORMSHEET.getRange(TASK_DATA.display);
         }
 
