@@ -56,9 +56,13 @@ const CREATE_REPEAT = "C12";
 const CREATE_ASSIGNEE = "C13";
 
 const CTN_INPUT = "D10:E10";
+const CTN_IN = "D10";
 const CDD_INPUT = "D11:E11";
+const CDD_IN = "D11";
 const CRP_INPUT = "D12:E12";
+const CRP_IN = "D12";
 const CAS_INPUT = "D13:E13";
+const CAS_IN = "D13";
 
 const CREATE_INPUT_RANGE = "C10:E13";
 
@@ -69,6 +73,8 @@ const DATE_PICKER_RULE = SpreadsheetApp.newDataValidation()
     .setAllowInvalid(false) // Blocks invalid text entry
     .setHelpText("Please enter a valid date using the calendar picker.")
     .build();
+
+const RESPONSE_DD = "G8";
     
 
 
