@@ -39,7 +39,13 @@ function createTaskTrigger (e) {
                 }
 
                 if (eValue == "Cancel") {
-                    return requestResponse({display: display, eValue: eValue});
+                    if (!verifyCancel({display: display})) {
+                        return requestResponse({display: display, eValue: eValue});
+                    }
+                    else {
+                        startTasks();
+                        display.setValue("Create task cancelled");
+                    }
                 }
 
                 if (eValue == "Enter") {
