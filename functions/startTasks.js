@@ -27,7 +27,8 @@ function startTasks () {
         // set display
         display = FORMSHEET.getRange(FORM_DISPLAY_RANGE)
             .merge()
-            .setValue("");
+            .setValue("")
+            .setWrap(true);
 
         if (!setDisplayStyles({display: display, range: display})) {
             return false;
@@ -86,8 +87,6 @@ function startTasks () {
                             display:    display.getA1Notation()
                         }
         });
-
-        let TASK_CACHE = getCache();
 
         return true;
 

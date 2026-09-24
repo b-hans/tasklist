@@ -1,16 +1,12 @@
 function createNewTaskForm () {
 
-    const TASK_DATA = getCache();
-    let display = FORMSHEET.getRange("A1");
+    const data_display = getDisplayCache();
+    const TASK_DATA = data_display.TASK_DATA;
+    let display = data_display.display;
 
     try {
 
-        if (TASK_DATA && TASK_DATA.display) {
-            display = FORMSHEET.getRange(TASK_DATA.display);
-        }
-
         TASK_DATA.status = "create_task";
-
 
         FORMSHEET.getRange(CLEAR_RANGE)
             .clear()
@@ -54,7 +50,7 @@ function createNewTaskForm () {
         FORMSHEET.getRange(FORM_ACTIONS_DD)
             .setDataValidation(FORM_CREATE_ACTIONS_RULE);
 
-        let taskData = getTaskData({display: display});
+        let taskData = getTaskData();
 
         if (!taskData) {
             return false;

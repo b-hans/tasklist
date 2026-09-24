@@ -4,14 +4,11 @@ function responseTrigger (e) {
     const eValue = eRange.getValue();
     const A1 = eRange.getA1Notation();
 
-    const TASK_DATA = getCache();
+    const data_display = getDisplayCache();
+    const TASK_DATA = data_display.TASK_DATA;
+    let display = data_display.display;
 
     try {
-
-        let display = FORMSHEET.getRange("A1");
-        if (TASK_DATA && TASK_DATA.display) {
-            display = FORMSHEET.getRange(TASK_DATA.display);
-        }
         
         if (A1 != RESPONSE_DD) {
             display.activate();
@@ -39,6 +36,9 @@ function responseTrigger (e) {
 
                 case "No, return":
                     return clearResponse();
+
+                case "Yes, enter":
+                    return enterTask();
 
                 default:
                     display.setHorizontalAlignment('left')

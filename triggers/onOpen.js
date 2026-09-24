@@ -5,6 +5,5 @@ function onOpen() {
     .addItem('Start', 'startTasks')
     .addItem('Clear form', 'clearSheet')
     .addSeparator() // Adds a visual line divider
-    .addItem ('Test', 'test')
     .addToUi();
 }

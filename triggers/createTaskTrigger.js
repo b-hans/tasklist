@@ -4,14 +4,11 @@ function createTaskTrigger (e) {
     const eValue = eRange.getValue();
     const A1 = eRange.getA1Notation();
 
-    const TASK_DATA = getCache();
+    const data_display = getDisplayCache();
+    const TASK_DATA = data_display.TASK_DATA;
+    let display = data_display.display;
 
     try {
-
-        let display = FORMSHEET.getRange("A1");
-        if (TASK_DATA && TASK_DATA.display) {
-            display = FORMSHEET.getRange(TASK_DATA.display);
-        }
 
         /**
          *  valid values are
@@ -40,7 +37,7 @@ function createTaskTrigger (e) {
 
                 if (eValue == "Cancel") {
                     if (!verifyCancel({display: display})) {
-                        return requestResponse({display: display, eValue: eValue});
+                        return requestResponse({eValue: eValue});
                     }
                     else {
                         startTasks();
@@ -49,7 +46,10 @@ function createTaskTrigger (e) {
                 }
 
                 if (eValue == "Enter") {
-                    return requestResponse({display: display, eValue: eValue});
+                    if (!verifyTask({display: display})) {
+                        return false;
+                    }
+                    return requestResponse({eValue: eValue});
                 }
 
                 FORMSHEET.getRange(FORM_ACTIONS_DD).setValue("Actions");

@@ -1,11 +1,8 @@
 function getDataFromSheet (sheet) {
 
-    const TASK_DATA = getCache();
-    let display = FORMSHEET.getRange("A1");
-
-    if (TASK_DATA && TASK_DATA.display) {
-        display = FORMSHEET.getRange(TASK_DATA.display);
-    }
+    const data_display = getDisplayCache();
+    const TASK_DATA = data_display.TASK_DATA;
+    let display = data_display.display;
 
     try {
 

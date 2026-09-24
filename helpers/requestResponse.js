@@ -1,9 +1,11 @@
 function requestResponse (params) {
 
-    const display = params.display;
     const eValue = params.eValue;
 
-    const TASK_DATA = getCache();
+    const data_display = getDisplayCache();
+    let display = data_display.display;
+
+    const TASK_DATA = data_display.TASK_DATA;
     TASK_DATA.in_response = true;
 
     try {

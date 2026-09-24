@@ -1,7 +1,8 @@
-function getTaskData (params) {
+function getTaskData () {
 
-    let display = params.display;
-    const TASK_DATA = getCache();
+    const data_display = getDisplayCache();
+    let display = data_display.display;
+    const TASK_DATA = data_display.TASK_DATA;
 
     try {
 

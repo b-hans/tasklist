@@ -2,11 +2,11 @@ function mainTrigger (e) {
 
     const eRange = e.range;
     const eValue = eRange.getValue();
-    const TASK_DATA = getCache();
-
     const A1 = eRange.getA1Notation();
 
-    let display = getDisplay();
+    const data_display = getDisplayCache();
+    const TASK_DATA = data_display.TASK_DATA;
+    let display = data_display.display;
 
     try {
 
