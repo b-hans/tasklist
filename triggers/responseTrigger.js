@@ -38,7 +38,7 @@ function responseTrigger (e) {
                     return clearResponse();
 
                 case "Yes, enter":
-                    return enterTask();
+                    return enterTask({display: display});
 
                 default:
                     display.setHorizontalAlignment('left')
