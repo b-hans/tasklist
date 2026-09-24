@@ -59,7 +59,6 @@ function createTaskTrigger (e) {
                     return true;
                 }
 
-
                 display.setValue("Ready!");
                 return true;
 

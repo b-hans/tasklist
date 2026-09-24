@@ -12,7 +12,7 @@ function responseTrigger (e) {
         if (TASK_DATA.display) {
             display = FORMSHEET.getRange(TASK_DATA.display);
         }
-
+        
         if (A1 != RESPONSE_DD) {
             display.activate();
             eRange.setValue(e.oldValue);
@@ -28,6 +28,7 @@ function responseTrigger (e) {
             switch (eValue) {
 
                 case "Yes, cancel":
+                    FORMSHEET.getRange(CDD_IN).disabled = false;
                     if (!startTasks()) {
                         return false;
                     }
@@ -36,6 +37,10 @@ function responseTrigger (e) {
                         .setHorizontalAlignment('left');
 
                     return true;
+
+                case "No, return":
+                    FORMSHEET.getRange(CDD_IN).disabled = false;
+                    return clearResponse();
 
                 default:
                     display.setHorizontalAlignment('left')

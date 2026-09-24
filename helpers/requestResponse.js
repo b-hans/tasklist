@@ -18,6 +18,8 @@ function requestResponse (params) {
             display.setHorizontalAlignment('right').setFontColor('red')
                 .setValue(TASK_DATA.response_message);
 
+            FORMSHEET.getRange(CDD_IN).disabled = true;
+
             let reList = [
                 'Select one',
                 'Yes, cancel',
