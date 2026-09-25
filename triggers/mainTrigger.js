@@ -56,7 +56,7 @@ function mainTrigger (e) {
 
         if (row >= TASK_START_ROW && row <= FORMSHEET.getLastRow() &&
             col == TASK_CHECK_COLUMN) {
-                return checkTask({display: display});
+                return checkTask({display: display, e: e});
             }
 
         switch (A1) {
