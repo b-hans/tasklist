@@ -5,26 +5,13 @@ function updateTask (params) {
 
     try {
 
-        let row = [
-            task.task_id,
-            task.task_name,
-            task.due_date,
-            task.repeat_type,
-            task.completed,
-            task.assignee,
-        ];
+        const currentTask = new Task(task.task_id);
 
-        let sheet = SpreadsheetApp.openById(DATASHEET_ID)
-            .getSheetByName("Tasks");
+        if (!currentTask.update()) {
+            return false;
+        }
 
-        let idsFlat = sheet.getRange(1, 1, sheet.getLastRow(), 1)
-            .getValues().flat();
-
-        let myRow = idsFlat.indexOf(task.task_id) + 1;
-
-        sheet.getRange(myRow, 1, 1, row.length)
-            .setValues([row]);
-
+        console.log (currentTask.repeat_type, currentTask.completed);
         return true;
     }
     catch (error) {

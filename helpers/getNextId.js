@@ -21,8 +21,6 @@ function getNextId (params) {
         let data = sheet.getRange (2, idCol, numRows, 1)
             .getValues().flat();
 
-        console.log (data);
-
         return Math.max(...data) + 1;
 
     }
