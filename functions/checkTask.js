@@ -32,13 +32,18 @@ function checkTask (params) {
             return false;
         }
 
+        if (!startTasks()) {
+            return false;
+        }
+
+        display.setValue ("Now check repeat");
+
         // if repeat get next task
 
         // add next task to sheet
 
         // rebuild tasks
 
-        display.setValue("");
         return true;
     }
     catch (error){
