@@ -36,14 +36,7 @@ function checkTask (params) {
             return false;
         }
 
-        display.setValue ("Now check repeat");
-
-        // if repeat get next task
-
-        // add next task to sheet
-
-        // rebuild tasks
-
+        display.setValue ("Ready!");
         return true;
     }
     catch (error){

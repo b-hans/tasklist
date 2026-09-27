@@ -7,6 +7,11 @@ function populateTasks (params) {
         let myData = getTaskData();
         let tasks = myData.tasks;
 
+        if (tasks.length <= 0) {
+            display.setValue ("Ready!");
+            return true;
+        }
+
         let startRow = TASK_START_ROW;
 
         let mappedArray = tasks

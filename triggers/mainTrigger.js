@@ -41,23 +41,28 @@ function mainTrigger (e) {
             return createTaskTrigger(e);
         }
 
-        let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
+        if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
 
-        // checkbox range
-        let checkRange = FORMSHEET.getRange(
-            TASK_START_ROW,
-            TASK_CHECK_COLUMN,
-            numRows,
-            1,
-        );
+            let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
 
-        let row = eRange.getRow();
-        let col = eRange.getColumn();
+            // checkbox range
+            let checkRange = FORMSHEET.getRange(
+                TASK_START_ROW,
+                TASK_CHECK_COLUMN,
+                numRows,
+                1,
+            );
 
-        if (row >= TASK_START_ROW && row <= FORMSHEET.getLastRow() &&
-            col == TASK_CHECK_COLUMN) {
-                return checkTask({display: display, e: e});
-            }
+            let row = eRange.getRow();
+            let col = eRange.getColumn();
+
+            if (row >= TASK_START_ROW && row <= FORMSHEET.getLastRow() &&
+                col == TASK_CHECK_COLUMN) {
+                    return checkTask({display: display, e: e});
+                }
+
+
+        }
 
         switch (A1) {
 
