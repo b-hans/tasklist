@@ -79,6 +79,8 @@ const FORM_ASSIGNEE_RULE = SpreadsheetApp.newDataValidation()
 const FORM_ASSIGNEE_RANGE = "G8";
 const FORM_ASSIGNEE_TITLE_RANGE = "F8";
 
+const FORM_FILTERS_RANGE = "D8:G8";
+
 
 // create form
 const CREATE_TASK_NAME = "C10";

@@ -22,6 +22,10 @@ function mainActionsTrigger (e) {
             case "Actions":
                 break;
 
+            case "Show completed":
+                display.setValue ("Show completed");
+                return true;
+
             default:
                 eRange.setValue (e.oldValue);
                 display.setFontColor('red')

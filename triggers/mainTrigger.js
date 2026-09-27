@@ -69,6 +69,14 @@ function mainTrigger (e) {
             case FORM_ACTIONS_DD:
                 return mainActionsTrigger(e);
 
+            case FORM_DATE_RANGE:
+                display.setValue("Filter date: " + eValue);
+                return true;
+
+            case FORM_ASSIGNEE_RANGE:
+                display.setValue("Filter assignee: " + eValue);
+                return true;
+
             default:
                 eRange.setValue (e.oldValue);
                 display.setFontColor('red')
