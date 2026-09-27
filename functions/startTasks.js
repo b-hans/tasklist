@@ -79,6 +79,28 @@ function startTasks () {
             return false;
         }
 
+        // add the date filter
+        let dateFilterRange = FORMSHEET.getRange(FORM_DATE_RANGE);
+
+        setActionStyles({display: display, range: dateFilterRange});
+
+        dateFilterRange.setDataValidation(FORM_DATE_RULE)
+            .setValue('All');
+
+        let datefilterTitle = FORMSHEET.getRange(FORM_DATE_TITLE_RANGE)
+            .setHorizontalAlignment('right')
+            .setValue ("Date filter: ");
+
+        // add the assignee dropdown
+        let assigneeFilterRange = FORMSHEET.getRange(FORM_ASSIGNEE_RANGE);
+        setActionStyles({display: display, range: assigneeFilterRange});
+        assigneeFilterRange.setDataValidation(FORM_ASSIGNEE_RULE)
+            .setValue ("All");
+
+        let assigneeFilterTitle = FORMSHEET.getRange(FORM_ASSIGNEE_TITLE_RANGE)
+            .setHorizontalAlignment('right')
+            .setValue("Assignee filter: ");
+
         display.setValue("Ready!");
         setCache({
             display:    display, 
