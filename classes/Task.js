@@ -60,12 +60,28 @@ class Task {
                 break;
 
             case "Bi-weekly":
-            case "Quarterly":
-            case "Annually":
-            case "Semi-annually":
+                new_due_date.setDate(new_due_date.getDate() + (2*7));
+                break;
+
             case "Monthly":
+                new_due_date.setMonth(new_due_date.getMonth() + 1);
+                break;
+
             case "Bi-monthly":
-                return true;
+                new_due_date.setMonth(new_due_date.getMonth() + 2);
+                break;
+
+            case "Quarterly":
+                new_due_date.setMonth(new_due_date.getMonth() + 3);
+                break;
+
+            case "Annually":
+                new_due_date.setFullYear(new_due_date.getFullYear() + 1);
+                break;
+
+            case "Semi-annually":                
+                new_due_date.setMonth(new_due_date.getMonth() + 6);
+                break;
 
             default:
                 return true;
