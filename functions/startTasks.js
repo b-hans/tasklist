@@ -1,6 +1,7 @@
 function startTasks () {
 
     let display = FORMSHEET.getRange("A1");
+    let TASK_FILTERS = getCache();
 
     try {
         if (!clearSheet()) {
@@ -84,8 +85,14 @@ function startTasks () {
 
         setActionStyles({display: display, range: dateFilterRange});
 
-        dateFilterRange.setDataValidation(FORM_DATE_RULE)
-            .setValue('All');
+        dateFilterRange.setDataValidation(FORM_DATE_RULE);
+
+        if (TASK_FILTERS.date_filter) {
+            dateFilterRange.setValue(TASK_FILTERS.date_filter);
+        }
+        else {
+            dateFilterRange.setValue("All");
+        }
 
         let datefilterTitle = FORMSHEET.getRange(FORM_DATE_TITLE_RANGE)
             .setHorizontalAlignment('right')
@@ -107,7 +114,10 @@ function startTasks () {
             data:       {
                             status:     "main_menu",
                             display:    display.getA1Notation()
-                        }
+                        },
+            date_filter: TASK_FILTERS.date_filter ? TASK_FILTERS.date_filter : "All",
+            assignee_filter: TASK_FILTERS.assignee_filter ? TASK_FILTERS.assign_filter : "All"
+
         });
 
         if (!populateTasks({display: display})) {

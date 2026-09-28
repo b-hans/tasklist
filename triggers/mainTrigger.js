@@ -70,8 +70,7 @@ function mainTrigger (e) {
                 return mainActionsTrigger(e);
 
             case FORM_DATE_RANGE:
-                display.setValue("Filter date: " + eValue);
-                return true;
+                return setDateFilter({display: display, e: e});
 
             case FORM_ASSIGNEE_RANGE:
                 display.setValue("Filter assignee: " + eValue);
