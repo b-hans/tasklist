@@ -6,7 +6,7 @@ function setDateFilter (params) {
     const rangeA1 = eRange.getA1Notation();
     const eValue = eRange.getValue();
 
-    const TASK_CACHE = getCache();
+    const TASK_DATA = getCache();
 
     try {
 
@@ -18,7 +18,11 @@ function setDateFilter (params) {
 
         // filter the data
 
-        TASK_CACHE.date_filter = eValue;
+        TASK_DATA.date_filter = eValue;
+
+        if (!setCache({display: display, data: TASK_DATA})) {
+            return false;
+        }
 
         display.setValue ("Ready!");
         return true;
