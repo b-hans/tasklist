@@ -11,7 +11,6 @@ function updateTask (params) {
             return false;
         }
 
-        console.log (currentTask.repeat_type, currentTask.completed);
         return true;
     }
     catch (error) {
