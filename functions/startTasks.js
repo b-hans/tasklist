@@ -108,22 +108,22 @@ function startTasks () {
             .setHorizontalAlignment('right')
             .setValue("Assignee filter: ");
 
-        display.setValue("Ready!");
+        let cacheData = {
+            status:             "main_menu",
+            display:            display.getA1Notation(),
+            date_filter:        TASK_FILTERS.date_filter ? TASK_FILTERS.date_filter : "All",
+            assignee_filter:    TASK_FILTERS.assignee_filter ? TASK_FILTERS.assign_filter : "All"
+        }
         setCache({
             display:    display, 
-            data:       {
-                            status:     "main_menu",
-                            display:    display.getA1Notation()
-                        },
-            date_filter: TASK_FILTERS.date_filter ? TASK_FILTERS.date_filter : "All",
-            assignee_filter: TASK_FILTERS.assignee_filter ? TASK_FILTERS.assign_filter : "All"
-
+            data:       cacheData,
         });
 
         if (!populateTasks({display: display})) {
             return false;
         }
 
+        display.setValue("Ready!");
         return true;
 
     }

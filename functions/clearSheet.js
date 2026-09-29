@@ -16,10 +16,6 @@ function clearSheet () {
         FORMSHEET.setRowHeights(1, FORMSHEET.getMaxRows(), 21);
         FORMSHEET.setColumnWidths(1, FORMSHEET.getMaxColumns(), 100);
 
-        // if (!setCache({display: display, data: {status: 'clear'}})) {
-        //     return false;
-        // }
-
         display.setValue ("");
         return true;
     }

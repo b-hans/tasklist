@@ -51,6 +51,7 @@ const FORM_CREATE_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
 
 const FORM_DATE_LIST = [
     'All',
+    'Today',
     'This week',
     'This month',
     'This quarter',
