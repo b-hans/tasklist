@@ -41,6 +41,7 @@ function mainTrigger (e) {
             return createTaskTrigger(e);
         }
 
+        // look for checkboxes
         if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
 
             let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
