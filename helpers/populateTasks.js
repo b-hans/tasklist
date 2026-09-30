@@ -1,11 +1,22 @@
-function populateTasks (params) {
+function populateTasks () {
 
-    const display = params.display;
+    const display_data = getDisplayCache();
+    const display = display_data.display;
+    const TASK_DATA = display_data.TASK_DATA;
 
     try {
 
         let myData = getTaskData();
         let tasks = myData.tasks;
+        let headers = getHeaders({display: display});
+
+        clearTaskRange({display: display});
+
+        if (!headers) {
+            return false;
+        }
+
+        let taskHeaders = headers.tasks;
 
         if (tasks.length <= 0) {
             display.setValue ("Ready!");
@@ -38,6 +49,10 @@ function populateTasks (params) {
                     task.completed
                 ]
         );
+
+        if (TASK_DATA.date_filter) {
+            display.setValue ("filter: " + TASK_DATA.date_filter);
+        }
 
         mappedArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
 

@@ -119,7 +119,7 @@ function startTasks () {
             data:       cacheData,
         });
 
-        if (!populateTasks({display: display})) {
+        if (!populateTasks()) {
             return false;
         }
 

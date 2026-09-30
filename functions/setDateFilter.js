@@ -1,12 +1,14 @@
 function setDateFilter (params) {
 
-    const display = params.display;
     const e = params.e;
     const eRange = e.range;
     const rangeA1 = eRange.getA1Notation();
     const eValue = eRange.getValue();
 
-    const TASK_DATA = getCache();
+    const display_data = getDisplayCache();
+
+    const TASK_DATA = display_data.TASK_DATA;
+    const display = display_data.display;
 
     try {
 
@@ -16,16 +18,13 @@ function setDateFilter (params) {
             return true;
         }
 
-        // filter the data
-
         TASK_DATA.date_filter = eValue;
-
+     
         if (!setCache({display: display, data: TASK_DATA})) {
             return false;
         }
 
-        display.setValue ("Ready!");
-        return true;
+        return populateTasks();
 
     }
     catch (error) {
