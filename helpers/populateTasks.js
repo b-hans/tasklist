@@ -50,11 +50,48 @@ function populateTasks () {
                 ]
         );
 
-        if (TASK_DATA.date_filter) {
-            display.setValue ("filter: " + TASK_DATA.date_filter);
+        let filteredArray;
+
+
+        switch (TASK_DATA.date_filter) {
+
+            case "This week":
+
+                const now = new Date();
+                
+                // Calculate the start of the current week (Sunday at 00:00:00)
+                const startOfWeek = new Date(now);
+                startOfWeek.setDate(now.getDate() - now.getDay());
+                startOfWeek.setHours(0, 0, 0, 0);
+
+                // Calculate the end of the current week (Next Sunday at 00:00:00)
+                const endOfWeek = new Date(startOfWeek);
+                endOfWeek.setDate(startOfWeek.getDate() + 7);
+
+                // Filter the array
+                filteredArray = mappedArray.filter(task => {
+                    let cDate = new Date(task[2]);
+                    if (cDate >= startOfWeek &&
+                        cDate < endOfWeek) {
+                            return true;
+                        }
+                    else {
+                        return false;
+                    }
+                });
+
+                break;
+
+            case undefined:
+                filteredArray = mappedArray;
+                break;
+
+            default:
+                filteredArray = mappedArray;
+                break;
         }
 
-        mappedArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
+        filteredArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
 
         let curRow = startRow;
         let color1 = 'white';
