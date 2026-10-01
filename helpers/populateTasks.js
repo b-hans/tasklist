@@ -59,26 +59,33 @@ function populateTasks () {
 
                 const now = new Date();
                 
-                // Calculate the start of the current week (Sunday at 00:00:00)
+                // 1. Calculate the start of the current week (Sunday at 00:00:00)
                 const startOfWeek = new Date(now);
                 startOfWeek.setDate(now.getDate() - now.getDay());
                 startOfWeek.setHours(0, 0, 0, 0);
 
-                // Calculate the end of the current week (Next Sunday at 00:00:00)
+                // 2. Calculate the end of the current week (Saturday at 23:59:59)
                 const endOfWeek = new Date(startOfWeek);
-                endOfWeek.setDate(startOfWeek.getDate() + 7);
+                endOfWeek.setDate(startOfWeek.getDate() + 6);
+                endOfWeek.setHours(23, 59, 59, 999);
 
-                // Filter the array
+                // 3. Filter the array
                 filteredArray = mappedArray.filter(task => {
-                    let cDate = new Date(task[2]);
-                    if (cDate >= startOfWeek &&
-                        cDate < endOfWeek) {
-                            return true;
-                        }
-                    else {
-                        return false;
-                    }
-                });
+                    const dueDate = new Date(task[2]);
+                    return dueDate >= startOfWeek && dueDate <= endOfWeek;
+                });                
+                
+                // // Filter the array
+                // filteredArray = mappedArray.filter(task => {
+                //     let cDate = new Date(task[2]);
+                //     if (cDate >= startOfWeek &&
+                //         cDate < endOfWeek) {
+                //             return true;
+                //         }
+                //     else {
+                //         return false;
+                //     }
+                // });
 
                 break;
 
@@ -96,7 +103,7 @@ function populateTasks () {
         let curRow = startRow;
         let color1 = 'white';
         let color2 = '#f7f5d2';
-        for (let i=0; i<mappedArray.length; i++) {
+        for (let i=0; i<filteredArray.length; i++) {
             let bcolor;
             if (i % 2 === 0) {
                 bcolor = color2;
@@ -125,14 +132,14 @@ function populateTasks () {
         let taskRange = FORMSHEET.getRange(
             startRow,
             2,
-            mappedArray.length,
+            filteredArray.length,
             6
-        ).setValues(mappedArray);
+        ).setValues(filteredArray);
 
         let checkRange = FORMSHEET.getRange(
             startRow,
             7,
-            mappedArray.length,
+            filteredArray.length,
             1
         ).insertCheckboxes();
 
