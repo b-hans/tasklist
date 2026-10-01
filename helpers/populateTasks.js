@@ -25,7 +25,7 @@ function populateTasks () {
 
         let startRow = TASK_START_ROW;
 
-        let mappedArray = tasks
+        let openTasks = tasks
             .filter (
                 task => {
                     const strValue = String(task.completed).trim().toLowerCase();
@@ -38,20 +38,19 @@ function populateTasks () {
                     }
 
                 }
-            )
-            .map (
-                task => [
-                    task.task_name,
-                    "",
-                    task.due_date,
-                    "",
-                    task.assignee,
-                    task.completed
-                ]
-        );
+            );
+        //     .map (
+        //         task => [
+        //             task.task_name,
+        //             "",
+        //             task.due_date,
+        //             "",
+        //             task.assignee,
+        //             task.completed
+        //         ]
+        // );
 
         let filteredArray;
-
 
         switch (TASK_DATA.date_filter) {
 
@@ -70,40 +69,50 @@ function populateTasks () {
                 endOfWeek.setHours(23, 59, 59, 999);
 
                 // 3. Filter the array
-                filteredArray = mappedArray.filter(task => {
-                    const dueDate = new Date(task[2]);
+                filteredArray = openTasks.filter(task => {
+                    const dueDate = new Date(task.due_date);
                     return dueDate >= startOfWeek && dueDate <= endOfWeek;
                 });                
                 
-                // // Filter the array
-                // filteredArray = mappedArray.filter(task => {
-                //     let cDate = new Date(task[2]);
-                //     if (cDate >= startOfWeek &&
-                //         cDate < endOfWeek) {
-                //             return true;
-                //         }
-                //     else {
-                //         return false;
-                //     }
-                // });
+                break;
 
+            case "Today":
+                const todayStr = new Date().toDateString();
+
+                // Filter the array
+                filteredArray = openTasks.filter(task => {
+                    return new Date(task.due_date).toDateString() === 
+                        todayStr;
+                });     
+                
                 break;
 
             case undefined:
-                filteredArray = mappedArray;
+                filteredArray = openTasks;
                 break;
 
             default:
-                filteredArray = mappedArray;
+                filteredArray = openTasks;
                 break;
         }
 
-        filteredArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
+        let mappedArray = filteredArray.map (
+            task => [
+                task.task_name,
+                "",
+                task.due_date,
+                "",
+                task.assignee,
+                task.completed
+            ]
+        );
+
+        mappedArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
 
         let curRow = startRow;
         let color1 = 'white';
         let color2 = '#f7f5d2';
-        for (let i=0; i<filteredArray.length; i++) {
+        for (let i=0; i<mappedArray.length; i++) {
             let bcolor;
             if (i % 2 === 0) {
                 bcolor = color2;
@@ -132,14 +141,14 @@ function populateTasks () {
         let taskRange = FORMSHEET.getRange(
             startRow,
             2,
-            filteredArray.length,
+            mappedArray.length,
             6
-        ).setValues(filteredArray);
+        ).setValues(mappedArray);
 
         let checkRange = FORMSHEET.getRange(
             startRow,
             7,
-            filteredArray.length,
+            mappedArray.length,
             1
         ).insertCheckboxes();
 
