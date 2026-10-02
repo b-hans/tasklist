@@ -61,7 +61,20 @@ function populateTasks () {
                 // 3. Filter the array
                 filteredArray = openTasks.filter(task => {
                     const dueDate = new Date(task.due_date);
-                    return dueDate >= startOfWeek && dueDate <= endOfWeek;
+                    if (TASK_DATA.assignee_filter != "All") {
+                        if (task.assignee == TASK_DATA.assignee_filter &&
+                            dueDate >= startOfWeek && dueDate <= endOfWeek
+                        ) {
+                            return true;
+                        }
+
+                        return false;
+                    }
+                    else if (dueDate >= startOfWeek && dueDate <= endOfWeek){
+                        return true;
+                    }
+
+                    return false;
                 });                
                 
                 break;
