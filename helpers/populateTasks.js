@@ -39,16 +39,6 @@ function populateTasks () {
 
                 }
             );
-        //     .map (
-        //         task => [
-        //             task.task_name,
-        //             "",
-        //             task.due_date,
-        //             "",
-        //             task.assignee,
-        //             task.completed
-        //         ]
-        // );
 
         let filteredArray;
 
@@ -87,6 +77,46 @@ function populateTasks () {
                 
                 break;
 
+            case "This month":
+                const monthNow = new Date();
+                
+                filteredArray = openTasks.filter (task => {
+                    if (task.due_date.getFullYear() === monthNow.getFullYear() &&
+                        task.due_date.getMonth() === monthNow.getMonth()) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                });
+
+                break;
+
+            case "This quarter":
+
+                const mtoday = new Date();
+
+                filteredArray = openTasks.filter (task => {
+                    // 1. Check if the years match
+                    if (task.due_date.getFullYear() !== 
+                        mtoday.getFullYear()){
+                            return false;
+                        } 
+                    
+                    // 2. Calculate quarters: Math.ceil((month + 1) / 3)
+                    const currentQuarter = Math.ceil((mtoday.getMonth() + 1) / 3);
+                    const targetQuarter = Math.ceil((task.due_date.getMonth() + 1) / 3);
+                    
+                    if (currentQuarter === targetQuarter) {
+                        return true;
+                    }
+
+                    return false;
+
+                });                
+
+                break;
+
             case undefined:
                 filteredArray = openTasks;
                 break;
@@ -107,52 +137,65 @@ function populateTasks () {
             ]
         );
 
-        mappedArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
+        if (mappedArray.length > 0){
+            mappedArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
 
-        let curRow = startRow;
-        let color1 = 'white';
-        let color2 = '#f7f5d2';
-        for (let i=0; i<mappedArray.length; i++) {
-            let bcolor;
-            if (i % 2 === 0) {
-                bcolor = color2;
+            let now = new Date();
+
+            let curRow = startRow;
+            let color1 = 'white';
+            let color2 = '#f7f5d2';
+            let color3 ='#F1BAC4';
+            for (let i=0; i<mappedArray.length; i++) {
+                let bcolor;
+                if (mappedArray[i][2] < now) {
+                    bcolor = color3;
+                }
+                else if (i % 2 === 0) {
+                    bcolor = color2;
+                }
+                else {
+                    bcolor = color1;
+                }
+
+                let range = FORMSHEET.getRange(curRow, 2, 1, 2)
+                    .merge()
+                    .setBackground(bcolor);
+
+                range = FORMSHEET.getRange(curRow, 4, 1, 2)
+                    .merge()
+                    .setBackground(bcolor);
+
+                range = FORMSHEET.getRange(curRow, 6, 1, 1)
+                    .setBackground(bcolor)
+                    .setHorizontalAlignment('center');
+
+                range = FORMSHEET.getRange(curRow++, 7, 1, 1)
+                    .setBackground(bcolor)
+                    .setHorizontalAlignment('center');
             }
-            else {
-                bcolor = color1;
-            }
 
-            let range = FORMSHEET.getRange(curRow, 2, 1, 2)
-                .merge()
-                .setBackground(bcolor);
+            let taskRange = FORMSHEET.getRange(
+                startRow,
+                2,
+                mappedArray.length,
+                6
+            ).setValues(mappedArray);
 
-            range = FORMSHEET.getRange(curRow, 4, 1, 2)
-                .merge()
-                .setBackground(bcolor);
+            let checkRange = FORMSHEET.getRange(
+                startRow,
+                7,
+                mappedArray.length,
+                1
+            ).insertCheckboxes();
 
-            range = FORMSHEET.getRange(curRow, 6, 1, 1)
-                .setBackground(bcolor)
-                .setHorizontalAlignment('center');
+            display.setValue ("Ready!");
 
-            range = FORMSHEET.getRange(curRow++, 7, 1, 1)
-                .setBackground(bcolor)
-                .setHorizontalAlignment('center');
+        }
+        else {
+            display.setValue ("No tasks to display");
         }
 
-        let taskRange = FORMSHEET.getRange(
-            startRow,
-            2,
-            mappedArray.length,
-            6
-        ).setValues(mappedArray);
-
-        let checkRange = FORMSHEET.getRange(
-            startRow,
-            7,
-            mappedArray.length,
-            1
-        ).insertCheckboxes();
-
-        display.setValue ("Ready!");
         return true;
     }
     catch (error) {
