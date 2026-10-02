@@ -1,4 +1,4 @@
-function setDateFilter (params) {
+function setFilter (params) {
 
     const e = params.e;
     const eRange = e.range;
@@ -18,7 +18,15 @@ function setDateFilter (params) {
             return true;
         }
 
-        TASK_DATA.date_filter = eValue;
+        switch (rangeA1) {
+            case FORM_DATE_RANGE:
+                TASK_DATA.date_filter = eValue;
+                break;
+
+            case FORM_ASSIGNEE_RANGE:
+                TASK_DATA.assignee_filter = eValue;
+                break;
+        }        
      
         if (!setCache({display: display, data: TASK_DATA})) {
             return false;

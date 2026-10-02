@@ -101,8 +101,15 @@ function startTasks () {
         // add the assignee dropdown
         let assigneeFilterRange = FORMSHEET.getRange(FORM_ASSIGNEE_RANGE);
         setActionStyles({display: display, range: assigneeFilterRange});
-        assigneeFilterRange.setDataValidation(FORM_ASSIGNEE_RULE)
-            .setValue ("All");
+        assigneeFilterRange.setDataValidation(FORM_ASSIGNEE_RULE);
+
+        if (TASK_FILTERS.assignee_filter) {
+            assigneeFilterRange.setValue(TASK_FILTERS.assignee_filter);
+        }
+        else {
+            assigneeFilterRange.setValue ("All");
+        }
+            
 
         let assigneeFilterTitle = FORMSHEET.getRange(FORM_ASSIGNEE_TITLE_RANGE)
             .setHorizontalAlignment('right')

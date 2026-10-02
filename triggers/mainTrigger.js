@@ -71,11 +71,8 @@ function mainTrigger (e) {
                 return mainActionsTrigger(e);
 
             case FORM_DATE_RANGE:
-                return setDateFilter({e: e});
-
             case FORM_ASSIGNEE_RANGE:
-                display.setValue("Filter assignee: " + eValue);
-                return true;
+                return setFilter({e: e});
 
             default:
                 eRange.setValue (e.oldValue);

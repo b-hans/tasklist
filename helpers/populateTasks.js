@@ -189,11 +189,11 @@ function populateTasks () {
                 1
             ).insertCheckboxes();
 
-            display.setValue ("Ready!");
+            display.setValue ("Ready! " + TASK_DATA.assignee_filter);
 
         }
         else {
-            display.setValue ("No tasks to display");
+            display.setValue ("No tasks to display: " + TASK_DATA.assignee_filter);
         }
 
         return true;
