@@ -119,7 +119,7 @@ function startTasks () {
             status:             "main_menu",
             display:            display.getA1Notation(),
             date_filter:        TASK_FILTERS.date_filter ? TASK_FILTERS.date_filter : "All",
-            assignee_filter:    TASK_FILTERS.assignee_filter ? TASK_FILTERS.assign_filter : "All"
+            assignee_filter:    TASK_FILTERS.assignee_filter ? TASK_FILTERS.assignee_filter : "All"
         }
         setCache({
             display:    display, 
