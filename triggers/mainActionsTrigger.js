@@ -23,8 +23,16 @@ function mainActionsTrigger (e) {
                 break;
 
             case "Show completed":
-                display.setValue ("Show completed");
-                return true;
+                return setView ({
+                    data_display:   data_display, 
+                    type:           "completed"
+                });
+
+            case "Show not completed":
+                return setView ({
+                    data_display:   data_display, 
+                    type:           "open"
+                });
 
             default:
                 eRange.setValue (e.oldValue);

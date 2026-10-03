@@ -30,13 +30,17 @@ function populateTasks () {
                 task => {
                     const strValue = String(task.completed).trim().toLowerCase();
 
-                    if (!task.completed || strValue === "false" || strValue === "") {
-                        return true;
+                    if (TASK_DATA.view_type == "completed") {
+                        return task.completed
                     }
                     else {
-                        return false;
+                        if (!task.completed || strValue === "false" || strValue === "") {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
                     }
-
                 }
             );
 
