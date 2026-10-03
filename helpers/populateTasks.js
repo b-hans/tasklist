@@ -131,7 +131,7 @@ function populateTasks () {
                         if (TASK_DATA.assignee_filter != task.assignee) {
                             return false;
                         }
-                        
+
                         // 1. Check if the years match
                         if (task.due_date.getFullYear() !== 
                             mtoday.getFullYear()){
@@ -172,7 +172,7 @@ function populateTasks () {
 
                 break;
 
-            case undefined:
+            case undefingited:
                 filteredArray = openTasks;
                 break;
 
