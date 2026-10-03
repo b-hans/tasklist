@@ -172,7 +172,7 @@ function populateTasks () {
 
                 break;
 
-            case undefingited:
+            case undefined:
                 filteredArray = openTasks;
                 break;
 
