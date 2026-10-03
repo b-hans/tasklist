@@ -227,6 +227,14 @@ function populateTasks () {
                 break;
         }
 
+        let completedData;
+        if (TASK_DATA.view_type == "completed") {
+            completedData = "date_completed";
+        }
+        else {
+            completedData = "completed";
+        }
+
         let mappedArray = filteredArray.map (
             task => [
                 task.task_name,
@@ -234,7 +242,7 @@ function populateTasks () {
                 task.due_date,
                 "",
                 task.assignee,
-                task.completed
+                task[completedData]
             ]
         );
 
@@ -249,7 +257,9 @@ function populateTasks () {
             let color3 ='#F1BAC4';
             for (let i=0; i<mappedArray.length; i++) {
                 let bcolor;
-                if (mappedArray[i][2] < now) {
+                if (mappedArray[i][2] < now &&
+                    TASK_DATA.view_type != "completed"
+                ) {
                     bcolor = color3;
                 }
                 else if (i % 2 === 0) {
@@ -283,12 +293,15 @@ function populateTasks () {
                 6
             ).setValues(mappedArray);
 
-            let checkRange = FORMSHEET.getRange(
-                startRow,
-                7,
-                mappedArray.length,
-                1
-            ).insertCheckboxes();
+
+            if (TASK_DATA.view_type != "completed"){
+                let checkRange = FORMSHEET.getRange(
+                    startRow,
+                    7,
+                    mappedArray.length,
+                    1
+                ).insertCheckboxes();
+            }
 
             display.setValue ("Ready!");
 
