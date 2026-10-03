@@ -13,6 +13,11 @@ function createNewTaskForm () {
             .removeCheckboxes()
             .setBackground(FORM_BACKGROUND);
 
+        // clear filters
+        FORMSHEET.getRange(FORM_FILTERS_RANGE).clear()
+            .clearDataValidations()
+            .setBackground(FORM_BACKGROUND);
+
         // Task name
 
         let tn = FORMSHEET.getRange(CREATE_TASK_NAME).setValue("Task name: ");

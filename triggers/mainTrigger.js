@@ -41,6 +41,7 @@ function mainTrigger (e) {
             return createTaskTrigger(e);
         }
 
+        // look for checkboxes
         if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
 
             let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
@@ -68,6 +69,10 @@ function mainTrigger (e) {
 
             case FORM_ACTIONS_DD:
                 return mainActionsTrigger(e);
+
+            case FORM_DATE_RANGE:
+            case FORM_ASSIGNEE_RANGE:
+                return setFilter({e: e});
 
             default:
                 eRange.setValue (e.oldValue);

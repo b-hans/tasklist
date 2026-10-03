@@ -29,7 +29,8 @@ const FORM_ACTIONS_DD = "B8";
 
 const FORM_ACTIONS_LIST = [
     'Actions',
-    'Create new task'
+    'Create new task',
+    'Show completed'
 ];
 
 const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
@@ -47,6 +48,39 @@ const FORM_CREATE_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
     .requireValueInList(FORM_CREATE_ACTIONS_LIST, true)
     .setAllowInvalid(true)
     .build();
+
+const FORM_DATE_LIST = [
+    'All',
+    'Today',
+    'This week',
+    'This month',
+    'This quarter',
+];
+
+const FORM_DATE_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(FORM_DATE_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
+const FORM_DATE_RANGE = "E8";
+const FORM_DATE_TITLE_RANGE = "D8";
+
+// assignee
+const FORM_ASSIGNEE_LIST = [
+    'All',
+    'Brian',
+    'Nancy'
+];
+
+const FORM_ASSIGNEE_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(FORM_ASSIGNEE_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
+const FORM_ASSIGNEE_RANGE = "G8";
+const FORM_ASSIGNEE_TITLE_RANGE = "F8";
+
+const FORM_FILTERS_RANGE = "D8:G8";
 
 
 // create form

@@ -1,6 +1,7 @@
 function startTasks () {
 
     let display = FORMSHEET.getRange("A1");
+    let TASK_FILTERS = getCache();
 
     try {
         if (!clearSheet()) {
@@ -79,19 +80,57 @@ function startTasks () {
             return false;
         }
 
-        display.setValue("Ready!");
+        // add the date filter
+        let dateFilterRange = FORMSHEET.getRange(FORM_DATE_RANGE);
+
+        setActionStyles({display: display, range: dateFilterRange});
+
+        dateFilterRange.setDataValidation(FORM_DATE_RULE);
+
+        if (TASK_FILTERS.date_filter) {
+            dateFilterRange.setValue(TASK_FILTERS.date_filter);
+        }
+        else {
+            dateFilterRange.setValue("All");
+        }
+
+        let datefilterTitle = FORMSHEET.getRange(FORM_DATE_TITLE_RANGE)
+            .setHorizontalAlignment('right')
+            .setValue ("Date filter: ");
+
+        // add the assignee dropdown
+        let assigneeFilterRange = FORMSHEET.getRange(FORM_ASSIGNEE_RANGE);
+        setActionStyles({display: display, range: assigneeFilterRange});
+        assigneeFilterRange.setDataValidation(FORM_ASSIGNEE_RULE);
+
+        if (TASK_FILTERS.assignee_filter) {
+            assigneeFilterRange.setValue(TASK_FILTERS.assignee_filter);
+        }
+        else {
+            assigneeFilterRange.setValue ("All");
+        }
+            
+
+        let assigneeFilterTitle = FORMSHEET.getRange(FORM_ASSIGNEE_TITLE_RANGE)
+            .setHorizontalAlignment('right')
+            .setValue("Assignee filter: ");
+
+        let cacheData = {
+            status:             "main_menu",
+            display:            display.getA1Notation(),
+            date_filter:        TASK_FILTERS.date_filter ? TASK_FILTERS.date_filter : "All",
+            assignee_filter:    TASK_FILTERS.assignee_filter ? TASK_FILTERS.assignee_filter : "All"
+        }
         setCache({
             display:    display, 
-            data:       {
-                            status:     "main_menu",
-                            display:    display.getA1Notation()
-                        }
+            data:       cacheData,
         });
 
-        if (!populateTasks({display: display})) {
+        if (!populateTasks()) {
             return false;
         }
 
+        display.setValue("Ready!");
         return true;
 
     }

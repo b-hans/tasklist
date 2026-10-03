@@ -83,6 +83,10 @@ class Task {
                 new_due_date.setMonth(new_due_date.getMonth() + 6);
                 break;
 
+            case "Daily":
+                new_due_date.setDate(new_due_date.getDate() + 1);
+                break;
+
             default:
                 return true;
         }
