@@ -109,7 +109,20 @@ function populateTasks () {
                 const monthNow = new Date();
                 
                 filteredArray = openTasks.filter (task => {
-                    if (task.due_date.getFullYear() === monthNow.getFullYear() &&
+
+                    if (TASK_DATA.assignee_filter != "All") {
+                        if (TASK_DATA.assignee_filter != task.assignee) {
+                            return false;
+                        }
+
+                        if (task.due_date.getFullYear() === monthNow.getFullYear() &&
+                            task.due_date.getMonth() === monthNow.getMonth()) {
+                            return true;
+                        }
+
+                        return false;
+
+                    } else if (task.due_date.getFullYear() === monthNow.getFullYear() &&
                         task.due_date.getMonth() === monthNow.getMonth()) {
                         return true;
                     }
@@ -173,11 +186,40 @@ function populateTasks () {
                 break;
 
             case undefined:
-                filteredArray = openTasks;
+
+                if (TASK_DATA.assignee_filter &&
+                    TASK_DATA.assignee_filter != "All"
+                ) {
+                    filteredArray = openTasks.filter (task => {
+                        if (TASK_DATA.assignee_filter == task.assignee) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    });
+                }
+                else {
+                    filteredArray = openTasks;
+                }
                 break;
 
             default:
-                filteredArray = openTasks;
+                if (TASK_DATA.assignee_filter &&
+                    TASK_DATA.assignee_filter != "All"
+                ) {
+                    filteredArray = openTasks.filter (task => {
+                        if (TASK_DATA.assignee_filter == task.assignee) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    });
+                }
+                else {
+                    filteredArray = openTasks;
+                }
                 break;
         }
 
@@ -244,11 +286,11 @@ function populateTasks () {
                 1
             ).insertCheckboxes();
 
-            display.setValue ("Ready! " + TASK_DATA.assignee_filter);
+            display.setValue ("Ready!");
 
         }
         else {
-            display.setValue ("No tasks to display: " + TASK_DATA.assignee_filter);
+            display.setValue ("No tasks to display");
         }
 
         return true;
