@@ -84,8 +84,23 @@ function populateTasks () {
 
                 // Filter the array
                 filteredArray = openTasks.filter(task => {
-                    return new Date(task.due_date).toDateString() === 
-                        todayStr;
+
+                    if (TASK_DATA.assignee_filter != "All") {
+                        if (TASK_DATA.assignee_filter ==
+                            task.assignee &&
+                            new Date(task.due_date).toDateString() ===
+                            todayStr
+                        ) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    else if (new Date(task.due_date).toDateString() === 
+                        todayStr) {
+                            return true;
+                        }
+
+                    return false;
                 });     
                 
                 break;
