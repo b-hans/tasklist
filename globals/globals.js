@@ -38,6 +38,17 @@ const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
     .setAllowInvalid(true)
     .build();
 
+const FORM_COMPLETE_ACTIONS_LIST = [
+    'Actions',
+    'Create new task',
+    'Show not completed'
+];
+
+const FORM_COMPLETE_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(FORM_COMPLETE_ACTIONS_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
 const FORM_CREATE_ACTIONS_LIST = [
     'Actions',
     'Enter',
