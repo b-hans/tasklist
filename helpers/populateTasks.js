@@ -125,21 +125,48 @@ function populateTasks () {
                 const mtoday = new Date();
 
                 filteredArray = openTasks.filter (task => {
-                    // 1. Check if the years match
-                    if (task.due_date.getFullYear() !== 
-                        mtoday.getFullYear()){
+
+                    if (TASK_DATA.assignee_filter != "All") {
+
+                        if (TASK_DATA.assignee_filter != task.assignee) {
                             return false;
-                        } 
-                    
-                    // 2. Calculate quarters: Math.ceil((month + 1) / 3)
-                    const currentQuarter = Math.ceil((mtoday.getMonth() + 1) / 3);
-                    const targetQuarter = Math.ceil((task.due_date.getMonth() + 1) / 3);
-                    
-                    if (currentQuarter === targetQuarter) {
-                        return true;
+                        }
+                        
+                        // 1. Check if the years match
+                        if (task.due_date.getFullYear() !== 
+                            mtoday.getFullYear()){
+                                return false;
+                            } 
+                        
+                        // 2. Calculate quarters: Math.ceil((month + 1) / 3)
+                        const currentQuarter = Math.ceil((mtoday.getMonth() + 1) / 3);
+                        const targetQuarter = Math.ceil((task.due_date.getMonth() + 1) / 3);
+                        
+                        if (currentQuarter === targetQuarter) {
+                            return true;
+                        }
+
+                        return false;
+
                     }
+                    else {
+                        // 1. Check if the years match
+                        if (task.due_date.getFullYear() !== 
+                            mtoday.getFullYear()){
+                                return false;
+                            } 
+                        
+                        // 2. Calculate quarters: Math.ceil((month + 1) / 3)
+                        const currentQuarter = Math.ceil((mtoday.getMonth() + 1) / 3);
+                        const targetQuarter = Math.ceil((task.due_date.getMonth() + 1) / 3);
+                        
+                        if (currentQuarter === targetQuarter) {
+                            return true;
+                        }
 
                     return false;
+
+                    }
 
                 });                
 
