@@ -36,6 +36,13 @@ function mainTrigger (e) {
 
         }
 
+        if (!TASK_DATA.status) {
+            TASK_DATA.status = "main_menu";
+            TASK_DATA.display = FORM_DISPLAY_RANGE;
+            display = FORMSHEET.getRange(FORM_DISPLAY_RANGE);
+            setCache({display: display, data: TASK_DATA});
+        }
+
         if (TASK_DATA.in_response) {
             return responseTrigger(e);
         }
