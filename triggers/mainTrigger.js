@@ -23,6 +23,9 @@ function mainTrigger (e) {
             else if (eValue.toLowerCase() == "start") {
                 return startTasks();
             }
+            else if (eValue.toLowerCase().trim() == "run") {
+                return runTests();
+            }
             else {
                 eRange.setValue (e.oldValue);
                 display.setFontColor('red')

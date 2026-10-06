@@ -28,7 +28,7 @@ function mainActionsTrigger (e) {
                     type:           "completed"
                 });
 
-            case "Show not completed":
+            case "Show current":
                 return setView ({
                     data_display:   data_display, 
                     type:           "open"

@@ -257,7 +257,7 @@ function populateTasks () {
             let color3 ='#F1BAC4';
             for (let i=0; i<mappedArray.length; i++) {
                 let bcolor;
-                if (mappedArray[i][2] < now &&
+                if (isOnOrBeforeYesterday(mappedArray[i][2]) &&
                     TASK_DATA.view_type != "completed"
                 ) {
                     bcolor = color3;

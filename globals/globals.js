@@ -41,7 +41,7 @@ const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
 const FORM_COMPLETE_ACTIONS_LIST = [
     'Actions',
     'Create new task',
-    'Show not completed'
+    'Show current'
 ];
 
 const FORM_COMPLETE_ACTIONS_RULE = SpreadsheetApp.newDataValidation()

@@ -11,6 +11,7 @@ function setView (params) {
         let actionRange = FORMSHEET.getRange(FORM_ACTIONS_DD);
 
         if (type == "completed") {
+            FORMSHEET.getRange(CURRENT_TASK).setValue ("Completed tasks");
             actionRange.setDataValidation(FORM_COMPLETE_ACTIONS_RULE)
                 .setValue('Actions');
 
@@ -18,6 +19,7 @@ function setView (params) {
 
         }
         else {
+            FORMSHEET.getRange(CURRENT_TASK).setValue ("Current tasks");
             actionRange.setDataValidation(FORM_ACTIONS_RULE)
                 .setValue('Actions');
 
