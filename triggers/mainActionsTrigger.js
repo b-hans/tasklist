@@ -29,8 +29,10 @@ function mainActionsTrigger (e) {
                 });
 
             case "Edit tasks":
-                display.setValue("Set as edit");
-                return true;
+                return setView ({
+                    data_display:   data_display,
+                    type:           "edit"
+                });
 
             case "Show current":
                 return setView ({

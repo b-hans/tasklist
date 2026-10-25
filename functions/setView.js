@@ -18,6 +18,17 @@ function setView (params) {
             TASK_DATA.view_type = "completed"
 
         }
+        else if (type == "edit") {
+            // by name
+            // set the value of the tasks column to "All tasks"
+            // FORMSHEET.getRange(CURRENT_TASK).setValue ("All tasks");
+            // get a new data validation for actionRange
+
+            // set a new TASK_DATA.view_type
+
+            display.setValue ("Now in the setview edit");
+            return true;
+        }
         else {
             FORMSHEET.getRange(CURRENT_TASK).setValue ("Current tasks");
             actionRange.setDataValidation(FORM_ACTIONS_RULE)
