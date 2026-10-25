@@ -30,7 +30,8 @@ const FORM_ACTIONS_DD = "B8";
 const FORM_ACTIONS_LIST = [
     'Actions',
     'Create new task',
-    'Show completed'
+    'Show completed',
+    'Edit tasks'
 ];
 
 const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()

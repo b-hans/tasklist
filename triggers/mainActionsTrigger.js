@@ -28,6 +28,10 @@ function mainActionsTrigger (e) {
                     type:           "completed"
                 });
 
+            case "Edit tasks":
+                display.setValue("Set as edit");
+                return true;
+
             case "Show current":
                 return setView ({
                     data_display:   data_display, 
