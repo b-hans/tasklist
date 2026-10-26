@@ -33,12 +33,6 @@ function setView (params) {
             // set a new TASK_DATA.view_type
             TASK_DATA.view_type = "edit";
 
-            if (!populateEdit()){
-                return false;
-            }
-            else {
-                return true;
-            }
         }
         else {
             FORMSHEET.getRange(CURRENT_TASK).setValue ("Current tasks");
@@ -53,7 +47,12 @@ function setView (params) {
             return false;
         }
 
-        if (!populateTasks()) {
+        if (TASK_DATA.view_type == "edit") {
+            if (!populateEdit()){
+                return false;
+            }
+        }
+        else if (!populateTasks()) {
             return false;
         }
 
