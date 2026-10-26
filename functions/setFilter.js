@@ -19,6 +19,7 @@ function setFilter (params) {
         }
 
         switch (rangeA1) {
+
             case FORM_DATE_RANGE:
                 TASK_DATA.date_filter = eValue;
                 break;

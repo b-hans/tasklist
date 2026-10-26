@@ -31,10 +31,6 @@ function mainActionsTrigger (e) {
                     type:           "completed"
                 });
             
-            case "Past due":
-                display.setValue ("Show past due");
-                return true;
-
             case "Edit tasks":
                 return setView ({
                     data_display:   data_display,

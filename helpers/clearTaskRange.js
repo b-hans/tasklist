@@ -5,6 +5,11 @@ function clearTaskRange (params) {
     try {
 
         let lastRow = FORMSHEET.getLastRow();
+        let numRows = lastRow-TASK_START_ROW+1;
+
+        if (numRows < 1) {
+            return true;
+        }
 
         let range = FORMSHEET.getRange(
             TASK_START_ROW, 

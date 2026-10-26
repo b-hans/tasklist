@@ -10,7 +10,9 @@ function populateTasks () {
         let tasks = myData.tasks;
         let headers = getHeaders({display: display});
 
-        clearTaskRange({display: display});
+        if (!clearTaskRange({display: display})) {
+            return false;
+        }
 
         if (!headers) {
             return false;
@@ -184,6 +186,32 @@ function populateTasks () {
                     return false;
 
                     }
+
+                });                
+
+                break;
+
+            case "Past due":
+
+                const pdtoday = new Date();
+                pdtoday.setHours (0, 0, 0, 0);
+
+                filteredArray = openTasks.filter (task => {
+
+                    const pdDueDate = new Date(task.due_date);
+
+                    if (TASK_DATA.assignee_filter != "All") {
+
+                        if (TASK_DATA.assignee_filter != task.assignee) {
+                            return false;
+                        }
+                    }
+
+                    if (pdDueDate < pdtoday) {
+                        return true;
+                    }
+
+                    return false;
 
                 });                
 

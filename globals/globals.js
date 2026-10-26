@@ -32,7 +32,6 @@ const FORM_ACTIONS_LIST = [
     'Create new task',
     'Show completed',
     'Edit tasks',
-    'Past due',
     'Refresh'
 ];
 
@@ -69,6 +68,7 @@ const FORM_DATE_LIST = [
     'This week',
     'This month',
     'This quarter',
+    'Past due'
 ];
 
 const FORM_DATE_RULE = SpreadsheetApp.newDataValidation()
