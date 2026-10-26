@@ -7,14 +7,14 @@ function filterByTitleDate (params) {
 
         const mostRecent = Object.values (
             data.reduce((acc, current) => {
-                const currentTitle = current.task_name;
-                const currentDate = new Date(current.due_date);
 
-                // If title doesn't exist yet, or the current item has a newer date, update the map
-                if (!acc[currentTitle] || currentDate > new Date(acc[currentTitle].date)) {
-                    acc[currentTitle] = current;
+                const key = `${current.task_name}-${current.assignee}`;
+
+                // 2. If the key doesn't exist yet, or the current date is newer, update the map
+                if (!acc[key] || new Date(current.due_date) > new Date(acc[key].due_date)) {
+                    acc[key] = current;
                 }
-
+                
                 return acc;                
             }, {})
         );

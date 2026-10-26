@@ -9,6 +9,16 @@ function populateEdit () {
 
         clearTaskRange({display: display});
 
+        // FORMSHEET.getRange(CLEAR_RANGE)
+        //     .clear()
+        //     .removeCheckboxes()
+        //     .setBackground(FORM_BACKGROUND);
+
+        // clear filters
+        FORMSHEET.getRange(FORM_FILTERS_RANGE).clear()
+            .clearDataValidations()
+            .setBackground(FORM_BACKGROUND);
+
         let editTasks = filterByTitleDate({data: current_data, display: display});
 
         let mappedArray = editTasks.map (
