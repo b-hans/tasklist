@@ -31,7 +31,9 @@ const FORM_ACTIONS_LIST = [
     'Actions',
     'Create new task',
     'Show completed',
-    'Edit tasks'
+    'Edit tasks',
+    'Past due',
+    'Refresh'
 ];
 
 const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()

@@ -22,11 +22,18 @@ function mainActionsTrigger (e) {
             case "Actions":
                 break;
 
+            case "Refresh":
+                return startTasks();
+
             case "Show completed":
                 return setView ({
                     data_display:   data_display, 
                     type:           "completed"
                 });
+            
+            case "Past due":
+                display.setValue ("Show past due");
+                return true;
 
             case "Edit tasks":
                 return setView ({

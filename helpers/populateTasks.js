@@ -275,6 +275,7 @@ function populateTasks () {
 
                 range = FORMSHEET.getRange(curRow, 4, 1, 2)
                     .merge()
+                    .setHorizontalAlignment('right')
                     .setBackground(bcolor);
 
                 range = FORMSHEET.getRange(curRow, 6, 1, 1)
