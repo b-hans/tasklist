@@ -16,6 +16,9 @@ function mainActionsTrigger (e) {
 
         switch (eValue) {
 
+            case "Return":
+                return startTasks();
+
             case "Create new task":
                 return createNewTaskForm();
 

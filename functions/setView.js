@@ -21,13 +21,24 @@ function setView (params) {
         else if (type == "edit") {
             // by name
             // set the value of the tasks column to "All tasks"
-            // FORMSHEET.getRange(CURRENT_TASK).setValue ("All tasks");
+
+            FORMSHEET.getRange(CURRENT_TASK).setValue ("All tasks");
+            FORMSHEET.getRange(DUE_DATE_A1).setValue("Most Recent");
+            FORMSHEET.getRange(COMPLETED).setValue("Edit");
+            
             // get a new data validation for actionRange
+            actionRange.setDataValidation(EDIT_ACTIONS_RULE)
+                .setValue('Actions');
 
             // set a new TASK_DATA.view_type
+            TASK_DATA.view_type = "edit";
 
-            display.setValue ("Now in the setview edit");
-            return true;
+            if (!populateEdit()){
+                return false;
+            }
+            else {
+                return true;
+            }
         }
         else {
             FORMSHEET.getRange(CURRENT_TASK).setValue ("Current tasks");

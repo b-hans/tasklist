@@ -20,6 +20,7 @@ const FORM_DISPLAY_RANGE = "B5:G6";
 // current task headers
 const CURRENT_TASK = "B10:C10";
 const DUE_DATE = "D10:E10";
+const DUE_DATE_A1 = "D10";
 const ASSIGNEE = "F10";
 const COMPLETED = "G10";
 
@@ -37,6 +38,16 @@ const FORM_ACTIONS_LIST = [
 
 const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
     .requireValueInList(FORM_ACTIONS_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
+const EDIT_ACTIONS_LIST = [
+    'Actions',
+    'Return'
+];
+
+const EDIT_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(EDIT_ACTIONS_LIST, true)
     .setAllowInvalid(true)
     .build();
 
