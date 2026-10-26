@@ -37,10 +37,11 @@ function mainTrigger (e) {
         }
 
         if (!TASK_DATA.status) {
-            TASK_DATA.status = "main_menu";
-            TASK_DATA.display = FORM_DISPLAY_RANGE;
-            display = FORMSHEET.getRange(FORM_DISPLAY_RANGE);
-            setCache({display: display, data: TASK_DATA});
+            return startTasks()
+            // TASK_DATA.status = "main_menu";
+            // TASK_DATA.display = FORM_DISPLAY_RANGE;
+            // display = FORMSHEET.getRange(FORM_DISPLAY_RANGE);
+            // setCache({display: display, data: TASK_DATA});
         }
 
         if (TASK_DATA.in_response) {
@@ -69,6 +70,10 @@ function mainTrigger (e) {
 
             if (row >= TASK_START_ROW && row <= FORMSHEET.getLastRow() &&
                 col == TASK_CHECK_COLUMN) {
+                    if (TASK_DATA.view_type == "edit") {
+                        return editTaskForm({e: e, display: display});
+                    }
+
                     return checkTask({display: display, e: e});
                 }
 
