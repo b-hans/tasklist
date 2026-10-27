@@ -121,6 +121,7 @@ function startTasks () {
             date_filter:        TASK_FILTERS.date_filter ? TASK_FILTERS.date_filter : "All",
             assignee_filter:    TASK_FILTERS.assignee_filter ? TASK_FILTERS.assignee_filter : "All"
         }
+        
         setCache({
             display:    display, 
             data:       cacheData,

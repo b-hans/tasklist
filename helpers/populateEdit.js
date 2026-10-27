@@ -9,12 +9,6 @@ function populateEdit () {
 
         clearTaskRange({display: display});
 
-        // FORMSHEET.getRange(CLEAR_RANGE)
-        //     .clear()
-        //     .removeCheckboxes()
-        //     .setBackground(FORM_BACKGROUND);
-
-        // clear filters
         FORMSHEET.getRange(FORM_FILTERS_RANGE).clear()
             .clearDataValidations()
             .setBackground(FORM_BACKGROUND);
@@ -31,8 +25,6 @@ function populateEdit () {
                 ""
             ]
         );
-
-        console.log (mappedArray);
 
         let startRow = TASK_START_ROW;
 

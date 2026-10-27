@@ -10,10 +10,14 @@ function editTaskForm (params) {
     try {
 
         // get name of task
-        const taskName = FORMSHEET.getRange(eRow, 2).getValue();
+        const taskName = FORMSHEET.getRange(eRow, FORM_TASK_NAME_COL)
+            .getValue();
 
         // get assignee of task
-        const taskAssignee = FORMSHEET.getRange(eRow, 6).getValue();
+        const taskAssignee = FORMSHEET.getRange(eRow, FORM_ASSIGNEE_COL)
+            .getValue();
+
+        const myTaskData = new Taskdata({task_name: taskName, assignee: taskAssignee});
 
         clearTaskRange({display: display});
         FORMSHEET.getRange(CLEAR_RANGE)
@@ -26,8 +30,22 @@ function editTaskForm (params) {
             .clearDataValidations()
             .setBackground(FORM_BACKGROUND);
 
+        const latest = myTaskData.latest();
+        const headers = myTaskData.headers;
 
-        display.setValue ("In edit task: " + taskName + " : " + taskAssignee);
+        display.setValue ("In edit task: " + myTaskData.task_name + 
+            " : " + myTaskData.assignee + "\n" +
+            "Latest: " + latest[headers.indexOf('due_date')].toLocaleDateString('en-US') +
+            " : "
+        );
+
+        if (latest[headers.indexOf('completed')]) {
+            display.setValue (display.getValue() + "closed");
+        }
+        else {
+            display.setValue (display.getValue() + "open");
+        }
+
         return true;
     }
     catch (error) {

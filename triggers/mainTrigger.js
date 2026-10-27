@@ -10,12 +10,14 @@ function mainTrigger (e) {
 
     try {
 
+        // Not in the forms sheet, return
         if (e.range.getSheet().getName() != "Forms") {
             return true;
         }
 
         display.setFontColor('black').setValue ("Working....");
 
+        // a1 range - options "clear" "start" "run"
         if (A1 == "A1") {
             if (eValue.toLowerCase() == "clear") {
                 return clearSheet();
@@ -36,6 +38,7 @@ function mainTrigger (e) {
 
         }
 
+        // if we're missing the status, lets restart
         if (!TASK_DATA.status) {
             return startTasks()
             // TASK_DATA.status = "main_menu";
@@ -44,15 +47,17 @@ function mainTrigger (e) {
             // setCache({display: display, data: TASK_DATA});
         }
 
+        // wating for a response
         if (TASK_DATA.in_response) {
             return responseTrigger(e);
         }
 
+        // status is create task
         if (TASK_DATA.status == "create_task") {
             return createTaskTrigger(e);
         }
 
-        // look for checkboxes
+        // look for checkboxes - either check the task as complete, or edit if in edit
         if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
 
             let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
@@ -80,6 +85,7 @@ function mainTrigger (e) {
 
         }
 
+        // from action dropdown
         switch (A1) {
 
             case FORM_ACTIONS_DD:

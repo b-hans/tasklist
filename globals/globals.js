@@ -6,6 +6,21 @@ const DATASHEET_ID = '1Is8Z2CBuAJ5oxIQztNq6rDFj65J_jtGORgsRe0k9iXI';
 // Call our working cache as TASK_CACHE
 const CACHE = CacheService.getScriptCache();
 
+/**
+ * List of CACHE properties
+ * 
+ * status: 'main_menu', 'create_task', 'edit_task'
+ * display: 'B5:G6',
+ * date_filter: 'All',
+ * assignee_filter: 'All',
+ * view_type: 'edit', 'completed', 'open'
+ * in_response: T/F
+ * 
+ * sheetData: ...
+ * 
+ * 
+ */
+
 
 const FORM_BACK_RANGE = "A1:H28";
 const FORM_BACKGROUND = '#e3eaf5';
@@ -136,6 +151,9 @@ const DATE_PICKER_RULE = SpreadsheetApp.newDataValidation()
 const RESPONSE_DD = "G8";
 const TASK_START_ROW = 11;
 const TASK_CHECK_COLUMN = 7;
+
+const FORM_TASK_NAME_COL = 2;
+const FORM_ASSIGNEE_COL = 6;
     
 
 
