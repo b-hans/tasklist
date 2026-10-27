@@ -58,6 +58,8 @@ const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
 
 const EDIT_ACTIONS_LIST = [
     'Actions',
+    'Edit',
+    'Remove/archive the task',
     'Return'
 ];
 
