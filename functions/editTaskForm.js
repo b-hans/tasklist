@@ -6,6 +6,7 @@ function editTaskForm (params) {
     const eRow = eRange.getRow();
     const eValue = eRange.getValue();
     const a1 = eRange.getA1Notation();
+    const TASK_DATA = getDisplayCache().TASK_DATA;
 
     try {
 
@@ -67,9 +68,6 @@ function editTaskForm (params) {
 
         // change actions
 
-        // FORMSHEET.getRange(FORM_ACTIONS_DD)
-        //     .setDataValidation(FORM_CREATE_ACTIONS_RULE);
-
         let taskData = getTaskData();
 
         if (!taskData) {
@@ -113,19 +111,19 @@ function editTaskForm (params) {
         assigneeOptionDD.setDataValidation(aodd_rule)
             .setValue(latest[headers.indexOf('assignee')]);
 
-
-        // display.setValue ("In edit task: " + myTaskData.task_name + 
-        //     " : " + myTaskData.assignee + "\n" +
-        //     "Latest: " + latest[headers.indexOf('due_date')].toLocaleDateString('en-US') +
-        //     " : "
-        // );
-
         if (latest[headers.indexOf('completed')]) {
             display.setValue ("Task is closed");
+            TASK_DATA.date_status = "closed";
         }
         else {
             display.setValue ("Task is open");
+            TASK_DATA.date_status = "open";
         }
+
+        TASK_DATA.status = "edit_task";
+        TASK_DATA.task_name = taskName;
+        TASK_DATA.assignee = taskAssignee;
+        setCache({display: display, data: TASK_DATA});
 
         return true;
     }

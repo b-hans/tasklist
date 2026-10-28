@@ -41,10 +41,6 @@ function mainTrigger (e) {
         // if we're missing the status, lets restart
         if (!TASK_DATA.status) {
             return startTasks()
-            // TASK_DATA.status = "main_menu";
-            // TASK_DATA.display = FORM_DISPLAY_RANGE;
-            // display = FORMSHEET.getRange(FORM_DISPLAY_RANGE);
-            // setCache({display: display, data: TASK_DATA});
         }
 
         // wating for a response
@@ -55,6 +51,10 @@ function mainTrigger (e) {
         // status is create task
         if (TASK_DATA.status == "create_task") {
             return createTaskTrigger(e);
+        }
+
+        if (TASK_DATA.status == "edit_task") {
+            return editTaskTrigger({e: e});
         }
 
         // look for checkboxes - either check the task as complete, or edit if in edit
