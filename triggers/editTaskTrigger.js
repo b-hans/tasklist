@@ -11,8 +11,6 @@ function editTaskTrigger(params) {
 
     try {
 
-        console.log (TASK_DATA);
-
         // check a1 first
         switch (a1) {
 
@@ -20,6 +18,18 @@ function editTaskTrigger(params) {
                 switch (eValue) {
                     case "Return":
                         return startTasks();
+
+                    case "Edit":
+                        FORMSHEET.getRange(FORM_ACTIONS_DD).setValue ("Actions");
+                        if (!validateTaskEdit({display: display, TASK_DATA: TASK_DATA})) {
+                            return false;
+                        }
+                        else {
+
+                            display.setValue ("Now get a confirmation");
+                            return true;
+                            // return editTask ({display: display, TASK_DATA: TASK_DATA});
+                        }
 
                     default:
                         if (!isValueInDropdown({display: display, rangeA1: a1})) {

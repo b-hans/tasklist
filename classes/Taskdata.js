@@ -31,6 +31,10 @@ class Taskdata {
 
     latest () {
 
+        if (this.data.length < 1) {
+            return false;
+        }
+
         try {
             return this.data.reduce((max, item) => {
                 return new Date(item[this.headers.indexOf("due_date")]) > 
