@@ -25,10 +25,7 @@ function editTaskTrigger(params) {
                             return false;
                         }
                         else {
-
-                            display.setValue ("Now get a confirmation");
-                            return true;
-                            // return editTask ({display: display, TASK_DATA: TASK_DATA});
+                            return requestResponse({eValue: eValue});
                         }
 
                     default:

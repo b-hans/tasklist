@@ -10,12 +10,12 @@ function requestResponse (params) {
 
     try {
 
-        if (TASK_DATA.status == "create_task") {
+        let response_message;
+        let reList;
+        let reRule;
+        let resRange = FORMSHEET.getRange(RESPONSE_DD);
 
-            let response_message;
-            let reList;
-            let reRule;
-            let resRange = FORMSHEET.getRange(RESPONSE_DD);
+        if (TASK_DATA.status == "create_task") {
 
             switch (eValue) {
                 case "Cancel":
@@ -48,30 +48,53 @@ function requestResponse (params) {
 
             }
 
-            reRule = SpreadsheetApp.newDataValidation()
-                .requireValueInList(reList, true)
-                .setAllowInvalid(true)
-                .build();
+        }
+        else if (TASK_DATA.status == "edit_task") {
 
-            resRange.setBackground('#eeb7be')
-                .setDataValidation(reRule)
-                .setValue("Select one")
-                .activate();
+            switch (eValue) {
+                case "Edit":
 
-            display.setHorizontalAlignment('right').setFontColor('red')
-                .setValue(response_message);
+                    response_message = "You are about to make changes\n" +
+                        "Do you wish to proceed?";
 
-            TASK_DATA.response_message = response_message;
+                    reList = [
+                        'Select one',
+                        'Yes, edit',
+                        'No, return'
+                    ];
 
-            setCache({display: display, data: TASK_DATA});
+                    break;
 
-            return true;
+                default:
+                    return true;
+
+            }
 
         }
         else {
             display.setValue ("Hey get response");
             return true;
         }
+
+        reRule = SpreadsheetApp.newDataValidation()
+            .requireValueInList(reList, true)
+            .setAllowInvalid(true)
+            .build();
+
+        resRange.setBackground('#eeb7be')
+            .setDataValidation(reRule)
+            .setValue("Select one")
+            .activate();
+
+        display.setHorizontalAlignment('right').setFontColor('red')
+            .setValue(response_message);
+
+        TASK_DATA.response_message = response_message;
+
+        setCache({display: display, data: TASK_DATA});
+
+        return true;
+
 
     }
     catch (error) {

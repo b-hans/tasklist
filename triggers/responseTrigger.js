@@ -47,6 +47,23 @@ function responseTrigger (e) {
                     return true;
             }
         }
+        else if (TASK_DATA.status == "edit_task") {
+            switch (eValue) {
+
+                case "No, return":
+                    return clearResponse();
+
+                case "Yes, edit":
+                    return editTask({display: display, TASK_DATA: TASK_DATA});
+
+                default:
+                    display.setHorizontalAlignment('left')
+                        .setFontColor('black')
+                        .setValue ("Action: " + eValue);
+                    return true;
+            }
+            
+        }
 
         display.setHorizontalAlignment('left')
             .setFontColor('black')
