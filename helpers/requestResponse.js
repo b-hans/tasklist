@@ -65,6 +65,19 @@ function requestResponse (params) {
 
                     break;
 
+                case "Remove/archive the task":
+
+                    response_message = "You are about to set this to inactive, and archive it\n" +
+                        "Do you wish to proceed?";
+
+                    reList = [
+                        'Select one',
+                        'Yes, archive',
+                        'No, return'
+                    ];
+                    
+                    break;
+
                 default:
                     return true;
 

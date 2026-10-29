@@ -56,6 +56,9 @@ function responseTrigger (e) {
                 case "Yes, edit":
                     return editTask({display: display, TASK_DATA: TASK_DATA});
 
+                case "Yes, archive":
+                    return archiveTask({display: display, TASK_DATA: TASK_DATA});
+
                 default:
                     display.setHorizontalAlignment('left')
                         .setFontColor('black')

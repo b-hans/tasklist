@@ -28,6 +28,10 @@ function editTaskTrigger(params) {
                             return requestResponse({eValue: eValue});
                         }
 
+                    case "Remove/archive the task":
+                        FORMSHEET.getRange(FORM_ACTIONS_DD).setValue ("Actions");
+                        return requestResponse({eValue: eValue});
+
                     default:
                         if (!isValueInDropdown({display: display, rangeA1: a1})) {
                             display.setFontColor('red').setValue("Invalid");
