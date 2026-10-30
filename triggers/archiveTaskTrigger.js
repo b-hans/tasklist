@@ -11,8 +11,6 @@ function archiveTaskTrigger (params) {
 
     try {
 
-        FORMSHEET.getRange(FORM_ACTIONS_DD).setValue("Actions");
-
         switch (a1) {
 
             case FORM_ACTIONS_DD:
@@ -25,18 +23,31 @@ function archiveTaskTrigger (params) {
                         if (!isValueInDropdown({display: display, rangeA1: a1})) {
                             eRange.setValue("Actions");
                             display.setFontColor('red').setValue('Invalid');
+                            FORMSHEET.getRange(FORM_ACTIONS_DD).setValue("Actions")
+                                .activate();
+                            return true;
+                        }
+                        else {
+                            display.setValue("Ready");
+                            FORMSHEET.getRange(FORM_ACTIONS_DD).setValue("Actions")
+                                .activate();
                             return true;
                         }
 
-                        display.setValue("Ready");
-
-                        return true;
                 }
 
             case ARCHIVE_DD:
-                FORMSHEET.getRange(ARCHIVE_DD).setValue("Select archive");
-                display.setValue ("Check: " + eValue);
-                return true;
+                if (!isValueInDropdown({display: display, rangeA1: a1})) {
+                    display.setFontColor('red').setValue('Invalid');
+                    FORMSHEET.getRange(ARCHIVE_DD).setValue("Select archive")
+                        .activate();
+                    return true;
+                }
+                else {
+                    display.setValue ("Check: " + eValue);
+                    FORMSHEET.getRange(ARCHIVE_DD).setValue("Select archive");
+                    return true;
+                }
 
             default:
                 display.setFontColor('red').setValue('Invalid');
