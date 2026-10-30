@@ -56,8 +56,19 @@ function responseTrigger (e) {
                 case "Yes, edit":
                     return editTask({display: display, TASK_DATA: TASK_DATA});
 
-                case "Yes, archive":
-                    return archiveTask({display: display, TASK_DATA: TASK_DATA});
+                case "Archive only":
+                    return archiveTask({
+                        display:    display, 
+                        TASK_DATA:  TASK_DATA,
+                        type:       "archive"
+                    });
+
+                case "Archive and remove active":
+                    return archiveTask({
+                        display:    display, 
+                        TASK_DATA:  TASK_DATA,
+                        type:       "remove"
+                    });
 
                 default:
                     display.setHorizontalAlignment('left')

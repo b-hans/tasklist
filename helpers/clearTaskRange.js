@@ -23,9 +23,9 @@ function clearTaskRange (params) {
         if (lastRow > 28) {
             FORMSHEET.getRange(
                 29,
-                2,
+                1,
                 lastRow-29+1,
-                6
+                8
             ).setBackground('white');
         }
 

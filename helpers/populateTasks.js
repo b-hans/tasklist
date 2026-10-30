@@ -6,10 +6,12 @@ function populateTasks () {
 
     try {
 
+        // get data from Tasks
         let myData = getTaskData();
         let tasks = myData.tasks;
         let headers = getHeaders({display: display});
 
+        // Clear the form before populating
         if (!clearTaskRange({display: display})) {
             return false;
         }
@@ -27,6 +29,7 @@ function populateTasks () {
 
         let startRow = TASK_START_ROW;
 
+        // filter based on view_type "completed" or "open"
         let openTasks = tasks
             .filter (
                 task => {
@@ -48,6 +51,7 @@ function populateTasks () {
 
         let filteredArray;
 
+        // apply the current filters
         switch (TASK_DATA.date_filter) {
 
             case "This week":
@@ -263,6 +267,7 @@ function populateTasks () {
             completedData = "completed";
         }
 
+        // map the date into a 2d array before rendering in the sheet
         let mappedArray = filteredArray.map (
             task => [
                 task.task_name,
@@ -274,8 +279,21 @@ function populateTasks () {
             ]
         );
 
+        // render the array here
         if (mappedArray.length > 0){
+
+            // sort by due date
             mappedArray.sort ((a, b) => new Date(a[2]) - new Date(b[2]));
+
+            // set the range background to the default background color
+            let backRange = FORMSHEET.getRange(
+                startRow,
+                1,
+                mappedArray.length,
+                8
+            ).setBackground(FORM_BACKGROUND);
+
+            console.log ("Test");
 
             let now = new Date();
 

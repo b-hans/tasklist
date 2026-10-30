@@ -48,7 +48,9 @@ class Taskdata {
 
     }
 
-    archive () {
+    archive (params) {
+
+        const type = params.type;
 
         try {
 
@@ -100,6 +102,7 @@ class Taskdata {
             
             const colAIndex = this.headers.indexOf('task_name');
             const colBIndex = this.headers.indexOf('assignee');
+            const completed = this.headers.indexOf('completed');
 
             // Loop backwards from the bottom row to the top row (skipping row 1 header if needed)
             for (let j = data.length - 1; j >= 1; j--) {
@@ -109,6 +112,11 @@ class Taskdata {
                 
                 // Check if both conditions match
                 if (cellValueA === this.task_name && cellValueB === this.assignee) {
+
+                    if (type == "archive" && !data[j][completed]) {
+                        continue;
+                    }
+
                     // deleteRow expects a 1-based index, so row index is i + 1
                     this.sheet.deleteRow(j + 1);
                 }

@@ -2,6 +2,7 @@ function archiveTask(params) {
 
     const display = params.display;
     const TASK_DATA = params.TASK_DATA;
+    const type = params.type;
 
     try {
 
@@ -10,7 +11,7 @@ function archiveTask(params) {
             assignee:   TASK_DATA.assignee
         });
 
-        if (!task.archive()) {
+        if (!task.archive({type: type})) {
             return false;
         }
 

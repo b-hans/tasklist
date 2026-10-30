@@ -72,7 +72,8 @@ function requestResponse (params) {
 
                     reList = [
                         'Select one',
-                        'Yes, archive',
+                        'Archive only',
+                        'Archive and remove active',
                         'No, return'
                     ];
                     
