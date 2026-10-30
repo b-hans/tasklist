@@ -40,6 +40,12 @@ function mainActionsTrigger (e) {
                     type:           "edit"
                 });
 
+            case "Show archives":
+                return showArchives({
+                    display:    display,
+                    TASK_DATA:  TASK_DATA
+                });
+
             case "Show current":
                 return setView ({
                     data_display:   data_display, 

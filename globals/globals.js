@@ -48,6 +48,7 @@ const FORM_ACTIONS_LIST = [
     'Create new task',
     'Show completed',
     'Edit tasks',
+    'Show archives',
     'Refresh'
 ];
 
@@ -157,5 +158,18 @@ const TASK_CHECK_COLUMN = 7;
 const FORM_TASK_NAME_COL = 2;
 const FORM_ASSIGNEE_COL = 6;
     
+// Archive globals
 
+const ARCHIVE_ACTION_LIST = [
+    'Actions',
+    'Return',
+];
 
+const ARCHIVE_ACTION_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(ARCHIVE_ACTION_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
+const ARCHIVE_DDT_RANGE = "E8";
+const ARCHIVE_DD_RANGE = "F8:G8";
+const ARCHIVE_DD = "F8";

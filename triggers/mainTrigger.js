@@ -57,6 +57,10 @@ function mainTrigger (e) {
             return editTaskTrigger({e: e});
         }
 
+        if (TASK_DATA.status == "archives") {
+            return archiveTaskTrigger({e: e});
+        }
+
         // look for checkboxes - either check the task as complete, or edit if in edit
         if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
 
