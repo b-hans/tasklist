@@ -43,11 +43,17 @@ function archiveTaskTrigger (params) {
                         .activate();
                     return true;
                 }
-                else {
-                    display.setValue ("Check: " + eValue);
-                    FORMSHEET.getRange(ARCHIVE_DD).setValue("Select archive");
+
+                if (eValue == "Select archive") {
+                    display.setValue ("Ready!");
                     return true;
                 }
+
+                return renderArchive({
+                    display:    display,
+                    TASK_DATA:  TASK_DATA,
+                    eValue:     eValue
+                });
 
             default:
                 display.setFontColor('red').setValue('Invalid');
