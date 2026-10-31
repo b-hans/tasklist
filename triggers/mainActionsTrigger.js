@@ -16,19 +16,37 @@ function mainActionsTrigger (e) {
 
         switch (eValue) {
 
+            case "Return":
+                return startTasks();
+
             case "Create new task":
                 return createNewTaskForm();
 
             case "Actions":
                 break;
 
+            case "Refresh":
+                return startTasks();
+
             case "Show completed":
                 return setView ({
                     data_display:   data_display, 
                     type:           "completed"
                 });
+            
+            case "Edit tasks":
+                return setView ({
+                    data_display:   data_display,
+                    type:           "edit"
+                });
 
-            case "Show not completed":
+            case "Show archives":
+                return showArchives({
+                    display:    display,
+                    TASK_DATA:  TASK_DATA
+                });
+
+            case "Show current":
                 return setView ({
                     data_display:   data_display, 
                     type:           "open"

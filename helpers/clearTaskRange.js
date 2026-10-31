@@ -4,14 +4,30 @@ function clearTaskRange (params) {
 
     try {
 
+        let lastRow = FORMSHEET.getLastRow();
+        let numRows = lastRow-TASK_START_ROW+1;
+
+        if (numRows < 1) {
+            return true;
+        }
+
         let range = FORMSHEET.getRange(
             TASK_START_ROW, 
             2,
-            28-TASK_START_ROW+1,
+            lastRow-TASK_START_ROW+1,
             6
         ).clear()
         .removeCheckboxes()
         .setBackground(FORM_BACKGROUND);
+
+        if (lastRow > 28) {
+            FORMSHEET.getRange(
+                29,
+                1,
+                lastRow-29+1,
+                8
+            ).setBackground('white');
+        }
 
         return true;
     }

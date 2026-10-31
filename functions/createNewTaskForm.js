@@ -96,6 +96,7 @@ function createNewTaskForm () {
             .setValue("Select one");
 
         TASK_DATA.sheetData = taskData;
+
         setCache({display: display, data: TASK_DATA});
 
         display.setValue ("Ready!");

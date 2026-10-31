@@ -6,6 +6,21 @@ const DATASHEET_ID = '1Is8Z2CBuAJ5oxIQztNq6rDFj65J_jtGORgsRe0k9iXI';
 // Call our working cache as TASK_CACHE
 const CACHE = CacheService.getScriptCache();
 
+/**
+ * List of CACHE properties
+ * 
+ * status: 'main_menu', 'create_task', 'edit_task'
+ * display: 'B5:G6',
+ * date_filter: 'All',
+ * assignee_filter: 'All',
+ * view_type: 'edit', 'completed', 'open'
+ * in_response: T/F
+ * 
+ * sheetData: ...
+ * 
+ * 
+ */
+
 
 const FORM_BACK_RANGE = "A1:H28";
 const FORM_BACKGROUND = '#e3eaf5';
@@ -20,6 +35,7 @@ const FORM_DISPLAY_RANGE = "B5:G6";
 // current task headers
 const CURRENT_TASK = "B10:C10";
 const DUE_DATE = "D10:E10";
+const DUE_DATE_A1 = "D10";
 const ASSIGNEE = "F10";
 const COMPLETED = "G10";
 
@@ -30,7 +46,10 @@ const FORM_ACTIONS_DD = "B8";
 const FORM_ACTIONS_LIST = [
     'Actions',
     'Create new task',
-    'Show completed'
+    'Show completed',
+    'Edit tasks',
+    'Show archives',
+    'Refresh'
 ];
 
 const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
@@ -38,10 +57,22 @@ const FORM_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
     .setAllowInvalid(true)
     .build();
 
+const EDIT_ACTIONS_LIST = [
+    'Actions',
+    'Edit',
+    'Remove/archive the task',
+    'Return'
+];
+
+const EDIT_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(EDIT_ACTIONS_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
 const FORM_COMPLETE_ACTIONS_LIST = [
     'Actions',
     'Create new task',
-    'Show not completed'
+    'Show current'
 ];
 
 const FORM_COMPLETE_ACTIONS_RULE = SpreadsheetApp.newDataValidation()
@@ -66,6 +97,7 @@ const FORM_DATE_LIST = [
     'This week',
     'This month',
     'This quarter',
+    'Past due'
 ];
 
 const FORM_DATE_RULE = SpreadsheetApp.newDataValidation()
@@ -122,6 +154,22 @@ const DATE_PICKER_RULE = SpreadsheetApp.newDataValidation()
 const RESPONSE_DD = "G8";
 const TASK_START_ROW = 11;
 const TASK_CHECK_COLUMN = 7;
+
+const FORM_TASK_NAME_COL = 2;
+const FORM_ASSIGNEE_COL = 6;
     
+// Archive globals
 
+const ARCHIVE_ACTION_LIST = [
+    'Actions',
+    'Return',
+];
 
+const ARCHIVE_ACTION_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(ARCHIVE_ACTION_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+
+const ARCHIVE_DDT_RANGE = "E8";
+const ARCHIVE_DD_RANGE = "F8:G8";
+const ARCHIVE_DD = "F8";

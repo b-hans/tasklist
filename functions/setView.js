@@ -11,13 +11,31 @@ function setView (params) {
         let actionRange = FORMSHEET.getRange(FORM_ACTIONS_DD);
 
         if (type == "completed") {
+            FORMSHEET.getRange(CURRENT_TASK).setValue ("Completed tasks");
             actionRange.setDataValidation(FORM_COMPLETE_ACTIONS_RULE)
                 .setValue('Actions');
 
             TASK_DATA.view_type = "completed"
 
         }
+        else if (type == "edit") {
+            // by name
+            // set the value of the tasks column to "All tasks"
+
+            FORMSHEET.getRange(CURRENT_TASK).setValue ("All tasks");
+            FORMSHEET.getRange(DUE_DATE_A1).setValue("Most Recent");
+            FORMSHEET.getRange(COMPLETED).setValue("Edit");
+            
+            // get a new data validation for actionRange
+            actionRange.setDataValidation(EDIT_ACTIONS_RULE)
+                .setValue('Actions');
+
+            // set a new TASK_DATA.view_type
+            TASK_DATA.view_type = "edit";
+
+        }
         else {
+            FORMSHEET.getRange(CURRENT_TASK).setValue ("Current tasks");
             actionRange.setDataValidation(FORM_ACTIONS_RULE)
                 .setValue('Actions');
 
@@ -29,7 +47,12 @@ function setView (params) {
             return false;
         }
 
-        if (!populateTasks()) {
+        if (TASK_DATA.view_type == "edit") {
+            if (!populateEdit()){
+                return false;
+            }
+        }
+        else if (!populateTasks()) {
             return false;
         }
 
