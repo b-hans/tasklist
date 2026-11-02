@@ -30,7 +30,7 @@ function populateTasks () {
         let startRow = TASK_START_ROW;
 
         // filter based on view_type "completed" or "open"
-        let openTasks = tasks
+        let myTasks = tasks
             .filter (
                 task => {
                     const strValue = String(task.completed).trim().toLowerCase();
@@ -69,18 +69,20 @@ function populateTasks () {
                 endOfWeek.setHours(23, 59, 59, 999);
 
                 // 3. Filter the array
-                filteredArray = openTasks.filter(task => {
+                filteredArray = myTasks.filter(task => {
                     const dueDate = new Date(task.due_date);
                     if (TASK_DATA.assignee_filter != "All") {
                         if (task.assignee == TASK_DATA.assignee_filter &&
-                            dueDate >= startOfWeek && dueDate <= endOfWeek
+                            ((dueDate >= startOfWeek && dueDate <= endOfWeek) ||
+                            isTaskOverDue({taskData: task}))
                         ) {
                             return true;
                         }
 
                         return false;
                     }
-                    else if (dueDate >= startOfWeek && dueDate <= endOfWeek){
+                    else if ((dueDate >= startOfWeek && dueDate <= endOfWeek) ||
+                             isTaskOverDue({taskData: task})){
                         return true;
                     }
 
@@ -93,20 +95,22 @@ function populateTasks () {
                 const todayStr = new Date().toDateString();
 
                 // Filter the array
-                filteredArray = openTasks.filter(task => {
+                filteredArray = myTasks.filter(task => {
+
+                    console.log ("check", isTaskOverDue({taskData: task}))
 
                     if (TASK_DATA.assignee_filter != "All") {
-                        if (TASK_DATA.assignee_filter ==
-                            task.assignee &&
-                            new Date(task.due_date).toDateString() ===
-                            todayStr
+                        if (TASK_DATA.assignee_filter == task.assignee &&
+                            ((new Date(task.due_date).toDateString() ===
+                            todayStr) || isTaskOverDue({taskData: task}))
                         ) {
                             return true;
                         }
+
                         return false;
                     }
-                    else if (new Date(task.due_date).toDateString() === 
-                        todayStr) {
+                    else if (new Date(task.due_date).toDateString() ===  todayStr ||
+                             isTaskOverDue({taskData: task})) {
                             return true;
                         }
 
@@ -118,22 +122,24 @@ function populateTasks () {
             case "This month":
                 const monthNow = new Date();
                 
-                filteredArray = openTasks.filter (task => {
+                filteredArray = myTasks.filter (task => {
 
                     if (TASK_DATA.assignee_filter != "All") {
                         if (TASK_DATA.assignee_filter != task.assignee) {
                             return false;
                         }
 
-                        if (task.due_date.getFullYear() === monthNow.getFullYear() &&
-                            task.due_date.getMonth() === monthNow.getMonth()) {
+                        if ((task.due_date.getFullYear() === monthNow.getFullYear() &&
+                            task.due_date.getMonth() === monthNow.getMonth()) ||
+                            isTaskOverDue({taskData: task})) {
                             return true;
                         }
 
                         return false;
 
-                    } else if (task.due_date.getFullYear() === monthNow.getFullYear() &&
-                        task.due_date.getMonth() === monthNow.getMonth()) {
+                    } else if ((task.due_date.getFullYear() === monthNow.getFullYear() &&
+                        task.due_date.getMonth() === monthNow.getMonth()) ||
+                        isTaskOverDue({taskData: task})) {
                         return true;
                     }
                     else {
@@ -147,12 +153,17 @@ function populateTasks () {
 
                 const mtoday = new Date();
 
-                filteredArray = openTasks.filter (task => {
+                filteredArray = myTasks.filter (task => {
 
                     if (TASK_DATA.assignee_filter != "All") {
 
                         if (TASK_DATA.assignee_filter != task.assignee) {
                             return false;
+                        }
+
+                        // if overdue show
+                        if (isTaskOverDue({taskData: task})) {
+                            return true;
                         }
 
                         // 1. Check if the years match
@@ -173,6 +184,11 @@ function populateTasks () {
 
                     }
                     else {
+
+                        if (isTaskOverDue({taskData: task})) {
+                            return true;
+                        }
+
                         // 1. Check if the years match
                         if (task.due_date.getFullYear() !== 
                             mtoday.getFullYear()){
@@ -187,7 +203,7 @@ function populateTasks () {
                             return true;
                         }
 
-                    return false;
+                        return false;
 
                     }
 
@@ -197,21 +213,17 @@ function populateTasks () {
 
             case "Past due":
 
-                const pdtoday = new Date();
-                pdtoday.setHours (0, 0, 0, 0);
-
-                filteredArray = openTasks.filter (task => {
-
-                    const pdDueDate = new Date(task.due_date);
+                filteredArray = myTasks.filter (task => {
 
                     if (TASK_DATA.assignee_filter != "All") {
 
                         if (TASK_DATA.assignee_filter != task.assignee) {
                             return false;
                         }
+
                     }
 
-                    if (pdDueDate < pdtoday) {
+                    if (isTaskOverDue({taskData: task})) {
                         return true;
                     }
 
@@ -226,7 +238,7 @@ function populateTasks () {
                 if (TASK_DATA.assignee_filter &&
                     TASK_DATA.assignee_filter != "All"
                 ) {
-                    filteredArray = openTasks.filter (task => {
+                    filteredArray = myTasks.filter (task => {
                         if (TASK_DATA.assignee_filter == task.assignee) {
                             return true;
                         }
@@ -236,7 +248,7 @@ function populateTasks () {
                     });
                 }
                 else {
-                    filteredArray = openTasks;
+                    filteredArray = myTasks;
                 }
                 break;
 
@@ -244,7 +256,7 @@ function populateTasks () {
                 if (TASK_DATA.assignee_filter &&
                     TASK_DATA.assignee_filter != "All"
                 ) {
-                    filteredArray = openTasks.filter (task => {
+                    filteredArray = myTasks.filter (task => {
                         if (TASK_DATA.assignee_filter == task.assignee) {
                             return true;
                         }
@@ -254,7 +266,7 @@ function populateTasks () {
                     });
                 }
                 else {
-                    filteredArray = openTasks;
+                    filteredArray = myTasks;
                 }
                 break;
         }
@@ -292,8 +304,6 @@ function populateTasks () {
                 mappedArray.length,
                 8
             ).setBackground(FORM_BACKGROUND);
-
-            console.log ("Test");
 
             let now = new Date();
 
