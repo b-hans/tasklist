@@ -3,7 +3,7 @@ function archiveTaskTrigger (params) {
     const e = params.e;
     const eRange = e.range;
     const eValue = eRange.getValue();
-    const a1 = eRange.getA1Notation();
+    const A1 = eRange.getA1Notation();
 
     const displayData = getDisplayCache();
     const display = displayData.display;
@@ -11,32 +11,17 @@ function archiveTaskTrigger (params) {
 
     try {
 
-        // first check for the checkbox
-        // look for checkboxes - either check the task as complete, or edit if in edit
-        if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
+        let checkBoxRanges = getCheckBoxRanges({display: display});
 
-            let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
+        if (checkBoxRanges.includes(A1)) {
 
-            // checkbox range
-            let checkRange = FORMSHEET.getRange(
-                TASK_START_ROW,
-                TASK_CHECK_COLUMN,
-                numRows,
-                1,
-            );
-
-            let row = eRange.getRow();
-            let col = eRange.getColumn();
-
-            if (row >= TASK_START_ROW && row <= FORMSHEET.getLastRow() &&
-                col == TASK_CHECK_COLUMN) {
-                    display.setValue ("Checked show details");
-                    return true;
-                }
+            display.setValue ("Check box checked");
+            return true;
 
         }
 
-        switch (a1) {
+
+        switch (A1) {
 
             case FORM_ACTIONS_DD:
                 switch (eValue) {
@@ -45,7 +30,7 @@ function archiveTaskTrigger (params) {
                         return startTasks();
 
                     default:
-                        if (!isValueInDropdown({display: display, rangeA1: a1})) {
+                        if (!isValueInDropdown({display: display, rangeA1: A1})) {
                             eRange.setValue("Actions");
                             display.setFontColor('red').setValue('Invalid');
                             FORMSHEET.getRange(FORM_ACTIONS_DD).setValue("Actions")
@@ -62,7 +47,7 @@ function archiveTaskTrigger (params) {
                 }
 
             case ARCHIVE_DD:
-                if (!isValueInDropdown({display: display, rangeA1: a1})) {
+                if (!isValueInDropdown({display: display, rangeA1: A1})) {
                     display.setFontColor('red').setValue('Invalid');
                     FORMSHEET.getRange(ARCHIVE_DD).setValue("Select archive")
                         .activate();
