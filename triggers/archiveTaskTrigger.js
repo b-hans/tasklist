@@ -11,12 +11,21 @@ function archiveTaskTrigger (params) {
 
     try {
 
+        const rowNumber = eRange.getRow();
+
         let checkBoxRanges = getCheckBoxRanges({display: display});
 
         if (checkBoxRanges.includes(A1)) {
 
-            display.setValue ("Check box checked");
-            return true;
+            const archiveData = {
+                archiveName:    FORMSHEET.getRange(ARCHIVE_DD).getValue(),
+                taskName:       FORMSHEET.getRange(rowNumber, FORM_TASK_NAME_COL).getValue(),
+                assignee:       FORMSHEET.getRange(rowNumber, FORM_ASSIGNEE_COL).getValue(),
+                display:        display
+            }
+
+            return showArchiveTask(archiveData);
+
 
         }
 
