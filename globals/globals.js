@@ -157,6 +157,7 @@ const TASK_CHECK_COLUMN = 7;
 
 const FORM_TASK_NAME_COL = 2;
 const FORM_ASSIGNEE_COL = 6;
+const FORM_DATE_COL = 4;
     
 // Archive globals
 

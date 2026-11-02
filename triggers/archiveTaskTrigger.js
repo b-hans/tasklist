@@ -3,7 +3,7 @@ function archiveTaskTrigger (params) {
     const e = params.e;
     const eRange = e.range;
     const eValue = eRange.getValue();
-    const a1 = eRange.getA1Notation();
+    const A1 = eRange.getA1Notation();
 
     const displayData = getDisplayCache();
     const display = displayData.display;
@@ -11,7 +11,17 @@ function archiveTaskTrigger (params) {
 
     try {
 
-        switch (a1) {
+        let checkBoxRanges = getCheckBoxRanges({display: display});
+
+        if (checkBoxRanges.includes(A1)) {
+
+            display.setValue ("Check box checked");
+            return true;
+
+        }
+
+
+        switch (A1) {
 
             case FORM_ACTIONS_DD:
                 switch (eValue) {
@@ -20,7 +30,7 @@ function archiveTaskTrigger (params) {
                         return startTasks();
 
                     default:
-                        if (!isValueInDropdown({display: display, rangeA1: a1})) {
+                        if (!isValueInDropdown({display: display, rangeA1: A1})) {
                             eRange.setValue("Actions");
                             display.setFontColor('red').setValue('Invalid');
                             FORMSHEET.getRange(FORM_ACTIONS_DD).setValue("Actions")
@@ -37,7 +47,7 @@ function archiveTaskTrigger (params) {
                 }
 
             case ARCHIVE_DD:
-                if (!isValueInDropdown({display: display, rangeA1: a1})) {
+                if (!isValueInDropdown({display: display, rangeA1: A1})) {
                     display.setFontColor('red').setValue('Invalid');
                     FORMSHEET.getRange(ARCHIVE_DD).setValue("Select archive")
                         .activate();

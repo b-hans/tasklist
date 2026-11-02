@@ -61,31 +61,15 @@ function mainTrigger (e) {
             return archiveTaskTrigger({e: e});
         }
 
-        // look for checkboxes - either check the task as complete, or edit if in edit
-        if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
+        let checkBoxRanges = getCheckBoxRanges({display: display});
 
-            let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
+        if (checkBoxRanges.includes(A1)) {
 
-            // checkbox range
-            let checkRange = FORMSHEET.getRange(
-                TASK_START_ROW,
-                TASK_CHECK_COLUMN,
-                numRows,
-                1,
-            );
+            if (TASK_DATA.view_type == "edit") {
+                return editTaskForm({e: e, display: display});
+            }
 
-            let row = eRange.getRow();
-            let col = eRange.getColumn();
-
-            if (row >= TASK_START_ROW && row <= FORMSHEET.getLastRow() &&
-                col == TASK_CHECK_COLUMN) {
-                    if (TASK_DATA.view_type == "edit") {
-                        return editTaskForm({e: e, display: display});
-                    }
-
-                    return checkTask({display: display, e: e});
-                }
-
+            return checkTask({display: display, e: e});
 
         }
 
