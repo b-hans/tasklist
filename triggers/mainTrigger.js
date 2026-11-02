@@ -61,47 +61,15 @@ function mainTrigger (e) {
             return archiveTaskTrigger({e: e});
         }
 
-        // look for checkboxes - either check the task as complete, or edit if in edit
-        if (FORMSHEET.getLastRow() >= TASK_START_ROW) {
+        let checkBoxRanges = getCheckBoxRanges({display: display});
 
-            console.log ('here1');
+        if (checkBoxRanges.includes(A1)) {
 
-            let numRows = FORMSHEET.getLastRow() - TASK_START_ROW + 1;
-
-            console.log ('here2 num rows: ' + numRows);
-
-            // checkbox range
-            let checkRange = FORMSHEET.getRange(
-                TASK_START_ROW,
-                TASK_CHECK_COLUMN,
-                numRows,
-                1,
-            );
-
-            let row = eRange.getRow();
-            let col = eRange.getColumn();
-
-            console.log ('here3');
-            console.log (row, TASK_START_ROW, "greater than or equal",
-                FORMSHEET.getLastRow(), "less than or equal",
-                col, TASK_CHECK_COLUMN
-            );
-
-            if (row >= TASK_START_ROW && row <= FORMSHEET.getLastRow() &&
-                col == TASK_CHECK_COLUMN) {
-                console.log ('here4');
-                    if (TASK_DATA.view_type == "edit") {
-                        return editTaskForm({e: e, display: display});
-                    }
-
-                    return checkTask({display: display, e: e});
-            }
-            else {
-                console.log ('here5');
-                display.setValue ("Invalid check");
-                return false;
+            if (TASK_DATA.view_type == "edit") {
+                return editTaskForm({e: e, display: display});
             }
 
+            return checkTask({display: display, e: e});
 
         }
 
