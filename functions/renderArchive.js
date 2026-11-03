@@ -38,9 +38,11 @@ function renderArchive (params) {
             return false;
         }
 
+        let unMergeRange = FORMSHEET.getRange(ASSIGNEE + ":" + COMPLETED)
+            .breakApart();
+
         // myAssignee
         let myAssignee = FORMSHEET.getRange(ASSIGNEE)
-            .merge()
             .setValue ("Assignee");
 
         if (!setHeaderStyles({display: display, range: myAssignee})) {
@@ -49,7 +51,6 @@ function renderArchive (params) {
 
         // showDetails
         let showDetails = FORMSHEET.getRange(COMPLETED)
-            .merge()
             .setValue ("Show details");
 
         if (!setHeaderStyles({display: display, range: showDetails})) {
