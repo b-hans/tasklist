@@ -7,12 +7,15 @@ function showArchiveTask (archiveTask) {
 
     try {
 
+        const TASK_DATA = getDisplayCache().TASK_DATA;
+
         const sheet = SpreadsheetApp.openById(DATASHEET_ID)
             .getSheetByName(archiveName);
 
         const data = sheet.getDataRange().getValues();
         const headers = data.shift();
 
+        // filter for the input task
         const filteredArray = data.filter(row => {
 
             if (row[headers.indexOf('task_name')] == taskName &&
@@ -24,10 +27,16 @@ function showArchiveTask (archiveTask) {
 
         });
 
+        // sort most recent first
         filteredArray.sort ((a, b) => new Date(b[headers.indexOf('date_completed')]) -
             new Date(a[headers.indexOf('date_completed')]));
 
         clearTaskRange({display: display});
+
+        FORMSHEET.getRange(FORM_ACTIONS_DD)
+            .setDataValidation(ARCHIVE_DD_RULE)
+            .setValue('Actions')
+            .activate();
 
         FORMSHEET.getRange("E8:G8")
             .clear()
@@ -108,9 +117,13 @@ function showArchiveTask (archiveTask) {
             6
         ).setValues(mappedArray);
 
-        console.log (mappedArray);
+        TASK_DATA.status = "archive_detail";
 
-        display.setValue ("Get new cache values and dropdown");
+        if (!setCache({display: display, data: TASK_DATA})) {
+            return false;
+        }
+
+        display.setValue ("Ready!");
         return true;
     }
     catch (error) {

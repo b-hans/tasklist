@@ -122,9 +122,29 @@ function renderArchive (params) {
             archive.displayArray.length,
             6
         ).setValues(mappedArray);
+     
+        FORMSHEET.getRange(FORM_ACTIONS_DD)
+            .setDataValidation(ARCHIVE_ACTION_RULE)
+            .setValue('Actions')
+            .activate();
 
-        console.log (TASK_DATA);
+        FORMSHEET.getRange(ARCHIVE_DDT_RANGE)
+            .setHorizontalAlignment('right')
+            .setValue("Archives: ");
 
+        const matchedNames = getArchiveNames({display: display});
+
+        let archiveDD = FORMSHEET.getRange(ARCHIVE_DD_RANGE).merge();
+        setActionStyles({display: display, range: archiveDD});
+
+        const newRule = SpreadsheetApp.newDataValidation()
+            .requireValueInList(matchedNames, true)
+            .setAllowInvalid(true)
+            .build();
+
+        archiveDD.setDataValidation(newRule)
+            .setValue(TASK_DATA.current_archive)
+            .activate();
 
         display.setValue ("Ready!");
         return true;
