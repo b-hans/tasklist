@@ -97,8 +97,6 @@ function populateTasks () {
                 // Filter the array
                 filteredArray = myTasks.filter(task => {
 
-                    console.log ("check", isTaskOverDue({taskData: task}))
-
                     if (TASK_DATA.assignee_filter != "All") {
                         if (TASK_DATA.assignee_filter == task.assignee &&
                             ((new Date(task.due_date).toDateString() ===

@@ -11,18 +11,26 @@ function archiveTaskTrigger (params) {
 
     try {
 
+        const rowNumber = eRange.getRow();
         let checkBoxRanges = getCheckBoxRanges({display: display});
 
+        // we've submitted via checkbox
         if (checkBoxRanges.includes(A1)) {
 
-            display.setValue ("Check box checked");
-            return true;
+            const archiveData = {
+                archiveName:    FORMSHEET.getRange(ARCHIVE_DD).getValue(),
+                taskName:       FORMSHEET.getRange(rowNumber, FORM_TASK_NAME_COL).getValue(),
+                assignee:       FORMSHEET.getRange(rowNumber, FORM_ASSIGNEE_COL).getValue(),
+                display:        display
+            }
+
+            return showArchiveTask(archiveData);
 
         }
 
-
         switch (A1) {
 
+            // action dropdown
             case FORM_ACTIONS_DD:
                 switch (eValue) {
 
@@ -46,6 +54,7 @@ function archiveTaskTrigger (params) {
 
                 }
 
+            // archive dropdown
             case ARCHIVE_DD:
                 if (!isValueInDropdown({display: display, rangeA1: A1})) {
                     display.setFontColor('red').setValue('Invalid');
@@ -66,8 +75,8 @@ function archiveTaskTrigger (params) {
                 });
 
             default:
-                display.setFontColor('red').setValue('Invalid');
                 eRange.setValue(e.oldValue);
+                display.setFontColor('red').setValue('Invalid');
                 return true;
         }
 

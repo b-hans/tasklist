@@ -65,10 +65,6 @@ function validateTaskEdit (params) {
             hasChanged = true;
         }
 
-        console.log (inputData);
-        console.log (latest);
-        console.log (task);
-
         if (!hasChanged) {
             display.setFontColor('red').setValue ("Nothing has been changed");
             return false;

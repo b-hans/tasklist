@@ -5,8 +5,6 @@ function isDuplicate (params) {
 
     try {
 
-        console.log (newTask);
-
         const testTask = new Taskdata ({
             task_name:  newTask.task_name, 
             assignee:   newTask.assignee

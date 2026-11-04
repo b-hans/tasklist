@@ -48,6 +48,10 @@ function mainTrigger (e) {
             return responseTrigger(e);
         }
 
+        if (TASK_DATA.status == "archive_detail") {
+            return actionDetailTrigger(e);
+        }
+
         // status is create task
         if (TASK_DATA.status == "create_task") {
             return createTaskTrigger(e);

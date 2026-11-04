@@ -174,3 +174,14 @@ const ARCHIVE_ACTION_RULE = SpreadsheetApp.newDataValidation()
 const ARCHIVE_DDT_RANGE = "E8";
 const ARCHIVE_DD_RANGE = "F8:G8";
 const ARCHIVE_DD = "F8";
+
+const ARCHIVE_DD_LIST = [
+    'Actions',
+    'Return to archive',
+    'Leave archives'
+];
+
+const ARCHIVE_DD_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(ARCHIVE_DD_LIST, true)
+    .setAllowInvalid(true)
+    .build();
