@@ -6,6 +6,8 @@ function populateTasks () {
 
     try {
 
+        console.log ('test1', TASK_DATA);
+
         // get data from Tasks
         let myData = getTaskData();
         let tasks = myData.tasks;
