@@ -6,8 +6,6 @@ function populateTasks () {
 
     try {
 
-        console.log ('test1', TASK_DATA);
-
         // get data from Tasks
         let myData = getTaskData();
         let tasks = myData.tasks;
@@ -37,16 +35,11 @@ function populateTasks () {
                 task => {
                     const strValue = String(task.completed).trim().toLowerCase();
 
-                    if (TASK_DATA.view_type == "completed") {
-                        return task.completed
+                    if (!task.completed || strValue === "false" || strValue === "") {
+                        return true;
                     }
                     else {
-                        if (!task.completed || strValue === "false" || strValue === "") {
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
+                        return false;
                     }
                 }
             );
@@ -272,12 +265,7 @@ function populateTasks () {
         }
 
         let completedData;
-        if (TASK_DATA.view_type == "completed") {
-            completedData = "date_completed";
-        }
-        else {
-            completedData = "completed";
-        }
+        completedData = "completed";
 
         // map the date into a 2d array before rendering in the sheet
         let mappedArray = filteredArray.map (

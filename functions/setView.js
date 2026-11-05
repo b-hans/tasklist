@@ -10,15 +10,7 @@ function setView (params) {
 
         let actionRange = FORMSHEET.getRange(FORM_ACTIONS_DD);
 
-        if (type == "completed") {
-            FORMSHEET.getRange(CURRENT_TASK).setValue ("Completed tasks");
-            actionRange.setDataValidation(FORM_COMPLETE_ACTIONS_RULE)
-                .setValue('Actions');
-
-            TASK_DATA.view_type = "completed"
-
-        }
-        else if (type == "edit") {
+        if (type == "edit") {
             // by name
             // set the value of the tasks column to "All tasks"
 

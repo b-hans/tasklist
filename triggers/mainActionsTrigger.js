@@ -29,10 +29,11 @@ function mainActionsTrigger (e) {
                 return startTasks();
 
             case "Show completed":
-                return setView ({
-                    data_display:   data_display, 
-                    type:           "completed"
-                });
+                return showCompleted();
+                // return setView ({
+                //     data_display:   data_display, 
+                //     type:           "completed"
+                // });
             
             case "Edit tasks":
                 return setView ({
