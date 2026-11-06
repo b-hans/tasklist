@@ -48,6 +48,10 @@ function mainTrigger (e) {
             return responseTrigger(e);
         }
 
+        if (TASK_DATA.status == "completed") {
+            return completedTrigger(e);
+        }
+
         if (TASK_DATA.status == "archive_detail") {
             return actionDetailTrigger(e);
         }

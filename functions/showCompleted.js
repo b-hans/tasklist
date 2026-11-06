@@ -170,8 +170,15 @@ function showCompleted () {
             ];
         });
 
-        // merge column 2 3 for the range
         let workingRange = FORMSHEET.getRange (
+            TASK_START_ROW,
+            1,
+            mappedArray.length + 1,
+            8
+        ).setBackgroundColor(FORM_BACKGROUND);
+
+        // merge column 2 3 for the range
+        workingRange = FORMSHEET.getRange (
             TASK_START_ROW,
             FORM_TASK_NAME_COL,
             mappedArray.length,
@@ -186,31 +193,30 @@ function showCompleted () {
             2
         ).mergeAcross();
 
-        let curRow = TASK_START_ROW;
-        let color1 = 'white';
-        let color2 = '#f7f5d2';
+        workingRange = FORMSHEET.getRange (
+            TASK_START_ROW - 1,
+            2,
+            mappedArray.length + 1,
+            6
+        );
 
-        for (let i=0; i<mappedArray.length; i++) {
-            let bcolor;
-            if (i % 2 === 0) {
-                bcolor = color2;
-            }
-            else {
-                bcolor = color1;
-            }
+        zebraStripeCustomColors(workingRange);
 
-            let range = FORMSHEET.getRange(curRow, 2, 1, 6)
-                .setHorizontalAlignment('left')
-                .setBackground(bcolor);
+        workingRange = FORMSHEET.getRange(
+            TASK_START_ROW,
+            4,
+            mappedArray.length,
+            1
+        ).setHorizontalAlignment('right');
 
-            range = FORMSHEET.getRange(curRow, 4)
-                .setHorizontalAlignment('right');
+        workingRange = FORMSHEET.getRange(
+            TASK_START_ROW,
+            6,
+            mappedArray.length,
+            1,
+        ).setHorizontalAlignment('center')
+            .insertCheckboxes();
 
-            range = FORMSHEET.getRange(curRow++, 6)
-                .setHorizontalAlignment('center')
-                .insertCheckboxes();
-
-        }
 
         workingRange = FORMSHEET.getRange (
             TASK_START_ROW,
@@ -219,7 +225,15 @@ function showCompleted () {
             6
         ).setValues(mappedArray);
 
-        display.setValue ("next");
+        workingRange = FORMSHEET.getRange(FORM_ACTIONS_DD)
+            .setDataValidation(COMPLETED_RULE)
+            .setValue('Actions')
+            .activate();
+
+        TASK_DATA.status = "completed";
+        setCache({display: display, data: TASK_DATA});
+
+        display.setValue ("Ready!");
         return true;
 
     }

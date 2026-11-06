@@ -185,3 +185,14 @@ const ARCHIVE_DD_RULE = SpreadsheetApp.newDataValidation()
     .requireValueInList(ARCHIVE_DD_LIST, true)
     .setAllowInvalid(true)
     .build();
+
+const COMPLETED_LIST = [
+    'Actions',
+    'Return to main menu'
+];
+
+const COMPLETED_RULE = SpreadsheetApp.newDataValidation()
+    .requireValueInList(COMPLETED_LIST, true)
+    .setAllowInvalid(true)
+    .build();
+

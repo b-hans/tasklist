@@ -6,6 +6,7 @@ function clearSheet () {
 
         FORMSHEET.getRange(1, 1, FORMSHEET.getMaxRows(), FORMSHEET.getMaxColumns())
             .clear()
+            .removeCheckboxes()
             .setFontSize(10)
             .setFontFamily('Arial')
             .setHorizontalAlignment('left')
