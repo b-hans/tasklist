@@ -6,6 +6,6 @@ function zebraStripeCustomColors(range) {
 
   // Set custom colors using hex codes
   banding.setHeaderRowColor('white');
-  banding.setFirstRowColor('#ffffff');      // First stripe color (white)
-  banding.setSecondRowColor('#f7f5d2');     // Second stripe color (light gray)
+  banding.setFirstRowColor('#f7f5d2');      // First stripe color (white)
+  banding.setSecondRowColor('white');     // Second stripe color (light gray)
 }

@@ -10,13 +10,29 @@ function completedTrigger (e) {
 
     try {
 
+        console.log (TASK_DATA);
+
         const validation = eRange.getDataValidation();
 
         // if checked first
         if (validation !== null &&
             validation.getCriteriaType() === SpreadsheetApp.DataValidationCriteria.CHECKBOX ) {
-                display.setValue ("Do the check");
-                return true;
+
+                const row = eRange.getRow();
+
+                const task = {
+                    task_name:      FORMSHEET.getRange(row, 2).getValue(),
+                    assignee:       FORMSHEET.getRange(row, 5).getValue(),
+                    date_completed: FORMSHEET.getRange(row, 4).getValue()
+                }
+
+                if (!markTaskOpen ({display: display, task: task})) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
             }
 
         switch (A1) {
@@ -37,8 +53,16 @@ function completedTrigger (e) {
 
             case FORM_DATE_RANGE:
             case FORM_ASSIGNEE_RANGE:
-                display.setValue ("Refilter");
-                return true;
+
+                if (A1 == FORM_DATE_RANGE) {
+                    TASK_DATA.date_filter = eValue;
+                }
+                else if (A1 == FORM_ASSIGNEE_RANGE) {
+                    TASK_DATA.assignee_filter = eValue;
+                }
+
+                setCache({display: display, data: TASK_DATA});
+                return showCompleted();
 
             default:
                 display.setFontColor('red').setValue('Invalid');

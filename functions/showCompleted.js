@@ -6,8 +6,6 @@ function showCompleted () {
 
     try {
 
-        console.log (TASK_DATA);
-
         // get the completed tasks
         const ss = SpreadsheetApp.openById(DATASHEET_ID);
         const sheet = ss.getSheetByName("Tasks");
@@ -17,6 +15,21 @@ function showCompleted () {
 
         const date_filter = TASK_DATA.date_filter;
         const assignee_filter = TASK_DATA.assignee_filter;
+
+        let bRange = FORMSHEET.getRange (
+            TASK_START_ROW - 1,
+            2,
+            FORMSHEET.getLastRow(),
+            6
+        );
+
+        let existingBandings = bRange.getBandings();
+
+        existingBandings.forEach(function(banding) {
+            banding.remove();
+        });
+
+        clearTaskRange({display:display});
 
         const filteredData = data.filter (row => {
             const completed = row[headers.indexOf('completed')];
@@ -112,8 +125,6 @@ function showCompleted () {
         filteredData.sort ((a, b) => new Date(b[headers.indexOf('date_completed')]) -
             new Date(a[headers.indexOf('date_completed')]));
 
-        console.log (filteredData);
-
         // set up the form
 
         clearTaskRange({display: display});
@@ -169,6 +180,11 @@ function showCompleted () {
                 ""
             ];
         });
+
+        if (mappedArray.length <= 0) {
+            display.setValue ("Nothing to display");
+            return true;
+        }
 
         let workingRange = FORMSHEET.getRange (
             TASK_START_ROW,
