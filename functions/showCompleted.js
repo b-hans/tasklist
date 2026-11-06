@@ -15,17 +15,95 @@ function showCompleted () {
         const data = sheet.getDataRange().getValues();
         const headers = data.shift();
 
+        const date_filter = TASK_DATA.date_filter;
+        const assignee_filter = TASK_DATA.assignee_filter;
+
         const filteredData = data.filter (row => {
             const completed = row[headers.indexOf('completed')];
             const assignee = row[headers.indexOf('assignee')];
-            // const date_completed = new Date(row[headers.indexOf("date_completed")])
+            const date_completed = new Date(row[headers.indexOf("date_completed")])
             if (completed == true || completed == "true" || completed == "TRUE"){
-                return true;
-                // if (TASK_DATA.assignee_filter != "All") {
-                //     if (assignee == TASK_DATA.assignee) {
-                //         return true;
-                //     }
-                // }
+
+                if (TASK_DATA.assignee_filter != "All") {
+                    if (assignee != TASK_DATA.assignee_filter) {
+                        return false;
+                    }
+                }
+
+                // apply the current filters
+                switch (date_filter) {
+
+                    case "This week":
+
+                        const now = new Date();
+                        
+                        // 1. Calculate the start of the current week (Sunday at 00:00:00)
+                        const startOfWeek = new Date(now);
+                        startOfWeek.setDate(now.getDate() - now.getDay());
+                        startOfWeek.setHours(0, 0, 0, 0);
+
+                        // 2. Calculate the end of the current week (Saturday at 23:59:59)
+                        const endOfWeek = new Date(startOfWeek);
+                        endOfWeek.setDate(startOfWeek.getDate() + 6);
+                        endOfWeek.setHours(23, 59, 59, 999);
+
+                        if (date_completed >= startOfWeek && completed <= endOfWeek) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                        
+                    case "Today":
+                        const todayStr = new Date().toDateString();
+                        const todComplete = date_completed.toDateString();
+
+                        if (todComplete ===  todayStr) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case "This month":
+                        const monthNow = new Date();
+
+                        if ((date_completed.getFullYear() === monthNow.getFullYear() &&
+                            date_completed.getMonth() === monthNow.getMonth())) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                        
+
+                    case "This quarter":
+
+                        const mtoday = new Date();
+
+                        // 1. Check if the years match
+                        if (date_completed.getFullYear() !== 
+                            mtoday.getFullYear()){
+                                return false;
+                            } 
+                        
+                        // 2. Calculate quarters: Math.ceil((month + 1) / 3)
+                        const currentQuarter = Math.ceil((mtoday.getMonth() + 1) / 3);
+                        const targetQuarter = Math.ceil((date_completed.getMonth() + 1) / 3);
+                        
+                        if (currentQuarter === targetQuarter) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+
+                    case 'All':
+                    case 'Past due':
+                        return true;
+
+                }
+
             }
 
             return false;
@@ -79,8 +157,69 @@ function showCompleted () {
         applyHeaderStyle(hRange);
         hRange.setValue("Mark as open");
 
+        const mappedArray = filteredData.map(row => {
 
-        display.setValue ("getting completed");
+            return [
+                row[headers.indexOf('task_name')],
+                "",
+                new Date(row[headers.indexOf('date_completed')])
+                    .toLocaleDateString('en-US'),
+                row[headers.indexOf('assignee')],
+                "",
+                ""
+            ];
+        });
+
+        // merge column 2 3 for the range
+        let workingRange = FORMSHEET.getRange (
+            TASK_START_ROW,
+            FORM_TASK_NAME_COL,
+            mappedArray.length,
+            2
+        ).mergeAcross();
+
+        // merge column 6 7
+        workingRange = FORMSHEET.getRange (
+            TASK_START_ROW,
+            6,
+            mappedArray.length,
+            2
+        ).mergeAcross();
+
+        let curRow = TASK_START_ROW;
+        let color1 = 'white';
+        let color2 = '#f7f5d2';
+
+        for (let i=0; i<mappedArray.length; i++) {
+            let bcolor;
+            if (i % 2 === 0) {
+                bcolor = color2;
+            }
+            else {
+                bcolor = color1;
+            }
+
+            let range = FORMSHEET.getRange(curRow, 2, 1, 6)
+                .setHorizontalAlignment('left')
+                .setBackground(bcolor);
+
+            range = FORMSHEET.getRange(curRow, 4)
+                .setHorizontalAlignment('right');
+
+            range = FORMSHEET.getRange(curRow++, 6)
+                .setHorizontalAlignment('center')
+                .insertCheckboxes();
+
+        }
+
+        workingRange = FORMSHEET.getRange (
+            TASK_START_ROW,
+            2,
+            mappedArray.length,
+            6
+        ).setValues(mappedArray);
+
+        display.setValue ("next");
         return true;
 
     }
