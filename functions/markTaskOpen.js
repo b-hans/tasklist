@@ -11,8 +11,19 @@ function markTaskOpen (params) {
         const ss = SpreadsheetApp.openById(DATASHEET_ID);
         const sheet = ss.getSheetByName("Tasks");
 
-        const data = sheet.getDataRange().getValues();
+        let data = sheet.getDataRange().getValues();
         const headers = data[0];
+
+        let openTaskRow = data.findIndex (row => {
+            return row[headers.indexOf('task_name')] === task.task_name &&
+                    row[headers.indexOf('assignee')] == task.assignee &&
+                    row[headers.indexOf('date_completed')] == ""
+        })
+
+        if ((openTaskRow + 1) >= 1) {
+            sheet.deleteRow (openTaskRow + 1);
+            data = sheet.getDataRange().getValues();
+        }
 
         const rowIndex = data.findIndex (row => {
             return row[headers.indexOf('task_name')] === task.task_name &&
@@ -26,9 +37,6 @@ function markTaskOpen (params) {
 
             // get values of that row
             let values = data [rowIndex];
-
-            // find any later tasks
-            return true;
 
 
             values[headers.indexOf('completed')] = false;
